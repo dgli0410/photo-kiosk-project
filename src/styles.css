@@ -1,0 +1,861 @@
+/* src/styles.css */
+/* --- General & Layout --- */
+.layout-root {
+    display: grid;
+    place-items: center;
+    background-image: linear-gradient(to bottom, rgb(255 241 242), rgb(254 226 226));
+}
+
+.layout-wrap {
+    transform-origin: center;
+    will-change: transform;
+    width: 1080px;
+    height: 1920px;
+}
+
+.layout-container {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    border-width: 4px;
+    border-color: rgb(147 197 253);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.layout-header {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    border-bottom: 1px solid rgb(229, 231, 255);
+    background-color: white;
+    height: 150px;
+}
+
+.header-logo-group {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    height: 150px;
+}
+
+.header-logo-group img {
+    height: 70px;
+    width: auto;
+    object-fit: contain;
+}
+
+.header-time {
+    font-size: 40px;
+    font-weight: 600;
+    color: rgb(31 41 55);
+}
+
+.layout-main {
+    position: relative;
+    flex: 1 1 0%;
+    overflow-y: auto;
+    background-repeat: no-repeat;
+    background-size: 170% 170%;
+    background-position: center 20%;
+}
+
+.layout-footer {
+    height: 180px;
+    background-color: transparent;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.footer-btn {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: opacity 150ms;
+}
+
+.footer-btn:hover {
+    opacity: 0.8;
+}
+
+.footer-btn img {
+    height: 120px;
+    width: auto;
+}
+
+.page-title {
+    font-size: 3.5rem;
+    /* 56px */
+    font-weight: 800;
+    color: rgb(17 24 39);
+    letter-spacing: -0.025em;
+    margin-bottom: 1.5rem;
+}
+
+/* --- KioskMain.jsx --- */
+.kiosk-main-root {
+    inset: 0;
+    display: grid;
+    align-items: flex-start;
+    justify-content: center;
+    background-image: linear-gradient(to bottom, rgb(254 242 242), rgb(254 226 226));
+}
+
+.kiosk-main-content {
+    position: relative;
+    flex: 1 1 0%;
+    display: grid;
+    place-items: start center;
+    padding-top: 10rem;
+    overflow: hidden;
+    background-repeat: no-repeat;
+}
+
+.kiosk-main-hearts-bg {
+    position: absolute;
+    inset: 0;
+    width: 140%;
+    height: 140%;
+    object-fit: contain;
+    object-position: center;
+    pointer-events: none;
+    opacity: 0.9;
+    top: -30%;
+    left: -20%;
+}
+
+.kiosk-main-viewport {
+    position: relative;
+    z-index: 10;
+    background-color: white;
+    border-radius: 28px;
+    padding: 1rem;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+}
+
+.viewport-inner-frame {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 22px;
+    border: 4px solid white;
+}
+
+.viewport-error {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+
+.viewport-inner-frame video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+}
+
+.kiosk-main-hands-fg {
+    position: absolute;
+    bottom: 500px;
+    width: 100%;
+    z-index: 20;
+    pointer-events: none;
+    user-select: none;
+}
+
+.kiosk-main-text-section {
+    position: absolute;
+    bottom: 240px;
+    left: 0;
+    width: 100%;
+    background-color: transparent;
+    z-index: 25;
+    text-align: center;
+    padding: 1rem 2.5rem 0;
+}
+
+.kiosk-main-text-section p:first-child {
+    font-size: 32px;
+    font-weight: 500;
+    color: rgba(55, 65, 81, 0.85);
+    line-height: 1.25;
+    margin-bottom: 0.25rem;
+}
+
+.kiosk-main-text-section h1 {
+    font-size: 76px;
+    line-height: 0.95;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+}
+
+.kiosk-main-text-section p:last-child {
+    font-size: 30px;
+    font-weight: 600;
+    color: rgba(55, 65, 81, 0.85);
+    line-height: 1.25;
+}
+
+.kiosk-main-start-btn {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 30;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.kiosk-main-start-btn img {
+    height: 140px;
+    width: auto;
+    transition: all 150ms;
+}
+
+.kiosk-main-start-btn:hover img {
+    filter: brightness(0.9);
+}
+
+.kiosk-main-start-btn:active img {
+    transform: scale(0.95) translatey(-5%);
+}
+
+
+/* --- ThemeSelect.jsx --- */
+.theme-select-container {
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 2.5rem 0;
+}
+
+.theme-select-body {
+    width: 100%;
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+}
+
+.theme-select-body button {
+    width: 88%;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.theme-select-body button img {
+    width: 100%;
+    transition: all 150ms;
+}
+
+.theme-select-body button:hover img {
+    filter: brightness(0.9);
+}
+
+/* --- Artworks.jsx --- */
+.artworks-container {
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.artworks-header {
+    padding: 2rem 2.5rem 1.5rem;
+    text-align: center;
+}
+
+.find-agency-btn {
+    display: inline-block;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    transition: transform 150ms;
+    cursor: pointer;
+}
+
+.find-agency-btn:hover {
+    transform: scale(1.05);
+}
+
+.find-agency-btn:active {
+    transform: scale(1);
+}
+
+.find-agency-btn img {
+    height: 80px;
+    width: auto;
+}
+
+.artworks-grid-container {
+    flex: 1 1 0%;
+    overflow-y: auto;
+    padding: 0 2.5rem 2.5rem;
+}
+
+.artworks-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem 2.5rem;
+}
+
+.artwork-card-container {
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+}
+
+.artwork-image-background {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+
+.artwork-image-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.artwork-card-overlay {
+    position: absolute;
+    inset: 0;
+    /* 💡 배경을 투명하게 변경하고, overflow: hidden 추가 */
+    background: transparent;
+    overflow: hidden;
+
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    transition: box-shadow 150ms;
+
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+    gap: 1.25rem;
+}
+
+.artwork-card-container:hover .artwork-card-overlay {
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+.card-hole {
+    width: 85%;
+    top: 15px;
+    padding-bottom: 85%;
+    position: relative;
+    border-radius: 1.5rem;
+    margin-left: 30px;
+
+    /* 💡 거대한 흰색 그림자를 이용해 '구멍'을 제외한 부분을 덮음 */
+    box-shadow: 0 0 0 3000px white;
+}
+
+.card-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background-color: rgb(55 65 81);
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 600;
+    padding: 0.25rem 1rem;
+    border-radius: 0.5rem;
+    z-index: 10;
+}
+
+.card-info {
+    padding: 0;
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: column;
+    /* 💡 텍스트 영역에도 흰색 배경을 적용 */
+    background: white;
+    position: relative;
+    z-index: 2;
+    /* 그림자 위에 오도록 */
+}
+
+.card-info h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: rgb(17 24 39);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-info p {
+    font-size: 1.25rem;
+    color: rgb(31 41 55);
+    margin-top: 0.25rem;
+}
+
+.card-info .institution {
+    font-size: 1.125rem;
+    color: rgb(107 114 128);
+    margin-top: auto;
+    padding-top: 0.5rem;
+}
+
+.filtered-agency-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: white;
+    color: #ec4899;
+    border: 4px solid #ec4899;
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    font-size: 1.875rem;
+    font-weight: 700;
+}
+
+.filtered-agency-btn img {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+/* --- InstitutionModal.jsx --- */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 50;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+}
+
+.modal-panel {
+    background-color: white;
+    border-radius: 2.5rem;
+    width: 800px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+.modal-title {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 800;
+    color: rgb(17 24 39);
+    margin-bottom: 2.5rem;
+}
+
+.modal-button-list {
+    flex: 1 1 0%;
+    overflow-y: auto;
+    padding-right: 1rem;
+}
+
+.modal-button-list>*+* {
+    margin-top: 1rem;
+}
+
+.inst-button {
+    width: 100%;
+    text-align: left;
+    padding: 1.25rem;
+    border-radius: 9999px;
+    border: 4px solid rgb(209 213 219);
+    font-size: 1.875rem;
+    font-weight: 700;
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+.inst-button:hover {
+    border-color: #f472b6;
+    color: #f472b6;
+}
+
+.inst-button.selected {
+    border-color: #ec4899;
+    background-color: white;
+    color: #ec4899;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    padding-top: 2.5rem;
+}
+
+.close-button,
+.complete-button {
+    padding: 1.25rem 5rem;
+    font-size: 1.875rem;
+    font-weight: 700;
+    border-radius: 9999px;
+    transition: background-color 150ms;
+    border: none;
+    cursor: pointer;
+}
+
+.close-button {
+    background-color: rgb(229 231 235);
+    color: rgb(55 65 81);
+}
+
+.close-button:hover {
+    background-color: rgb(209 213 219);
+}
+
+.complete-button {
+    background-color: #d94682;
+    color: white;
+}
+
+.complete-button:hover {
+    background-color: #ec4899;
+}
+
+/* --- PhotoShoot.jsx --- */
+.photoshoot-container {
+    height: 100%;
+    display: grid;
+    place-content: center;
+    gap: 2rem;
+}
+
+.photoshoot-viewport {
+    position: relative;
+    width: 506px;
+    height: 900px;
+    overflow: hidden;
+    border-radius: 1rem;
+    background-color: rgb(17 24 39);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.photoshoot-viewport canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.loading-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 10;
+}
+
+.loading-overlay p:first-child {
+    font-size: 2.25rem;
+    font-weight: 700;
+}
+
+.loading-overlay p:last-child {
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.capture-button {
+    padding: 1rem 3rem;
+    background-color: #d94682;
+    color: white;
+    font-size: 1.875rem;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 150ms;
+}
+
+.capture-button:hover {
+    background-color: #ec4899;
+}
+
+.capture-button:disabled {
+    background-color: rgb(156 163 175);
+    cursor: not-allowed;
+}
+
+/* --- ArtworkDetail.jsx --- */
+.artwork-detail-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1.5rem;
+}
+
+.detail-image {
+    width: 100%;
+    flex-shrink: 0;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    border-radius: 1rem;
+}
+
+.detail-info-box {
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.detail-description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #333;
+    flex-grow: 1;
+}
+
+.artist-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.artist-pic {
+    width: 64px;
+    height: 64px;
+    border-radius: 9999px;
+    background-color: #eee;
+}
+
+.artist-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.artist-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.artist-institution {
+    font-size: 1.125rem;
+    color: #555;
+}
+
+.detail-button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 120px;
+    padding: 0 1rem;
+}
+
+.cancel-text {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #555;
+}
+
+.confirm-photo-button {
+    background-color: #d94682;
+    color: white;
+    font-size: 1.875rem;
+    font-weight: 700;
+    padding: 1rem 3rem;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+}
+
+/* --- PhotoInstructions.jsx --- */
+.instructions-container {
+    height: 100%;
+    background-image: url('/images/photo-instruction-bg.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3rem;
+}
+
+.instructions-text-box {
+    font-size: 3rem;
+    font-weight: 800;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.instructions-button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 120px;
+}
+
+.instructions-button-group span {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: white;
+}
+
+.start-shooting-button {
+    background-color: #d94682;
+    color: white;
+    font-size: 1.875rem;
+    font-weight: 700;
+    padding: 1rem 3rem;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+}
+
+/* --- Review.jsx (디자인 수정) --- */
+.review-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.review-title {
+    font-size: 3rem;
+    font-weight: 800;
+}
+
+.review-image-frame {
+    flex-grow: 1;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.review-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.review-button-group {
+    display: flex;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.retake-button,
+.save-button {
+    flex: 1;
+    padding: 1.5rem;
+    font-size: 1.875rem;
+    font-weight: 700;
+    border-radius: 1rem;
+    border: 4px solid #ccc;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.retake-button {
+    background-color: #eee;
+    color: #333;
+}
+
+.save-button {
+    background-color: #d94682;
+    color: white;
+    border-color: #d94682;
+}
+
+/* --- QrCode.jsx (디자인 수정) --- */
+.qr-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.qr-text-box {
+    text-align: center;
+}
+
+.qr-title {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.qr-countdown-timer {
+    font-size: 4.5rem;
+    font-weight: 800;
+    color: #d94682;
+    margin-top: 1rem;
+}
+
+.qr-code-box {
+    padding: 2rem;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    flex-grow: 1;
+    display: grid;
+    place-items: center;
+}
+
+.qr-done-button {
+    width: 100%;
+    padding: 1.5rem;
+    font-size: 1.875rem;
+    font-weight: 700;
+    border-radius: 1rem;
+    background-color: #d94682;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
