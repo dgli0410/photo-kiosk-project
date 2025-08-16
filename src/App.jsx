@@ -12,6 +12,23 @@ import Review from "./Review.jsx";
 import QrCode from "./QrCode.jsx";
 import Layout from "./Layout.jsx";
 
+/**
+ * 이미지를 서버에 업로드하는 것을 시뮬레이션하는 임시 함수
+ * @param {string} dataUrl - 캔버스에서 생성된 base64 이미지 데이터
+ * @returns {Promise<string>} - 업로드된 이미지의 가짜 URL
+ */
+const uploadImageToServer = async (dataUrl) => {
+  console.log("서버에 이미지 업로드 시도:", dataUrl.substring(0, 50) + "...");
+
+  // 1초간 업로드하는 척 기다립니다.
+  await new Promise(resolve => setTimeout(resolve, 1000));
+
+  // 실제로는 서버가 없으므로, 성공했다고 가정하고 가짜 URL을 반환합니다.
+  const fakeImageUrl = `https://your-server.com/images/${Date.now()}.jpg`;
+  console.log("업로드 성공! 가짜 URL:", fakeImageUrl);
+
+  return fakeImageUrl;
+};
 // ... (uploadImageToServer 함수는 기존과 동일)
 
 export default function App() {
