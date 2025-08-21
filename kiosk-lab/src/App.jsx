@@ -22,7 +22,7 @@ import Layout from "./Layout.jsx";
 const uploadImageToServer = async (dataUrl) => {
   try {
     // 1. 우리 서버의 /upload 엔드포인트로 POST 요청을 보냅니다.
-    const response = await fetch('https://kiosk-server-j2ow.onrender.com', {
+    const response = await fetch('https://kiosk-server-j2ow.onrender.com/upload', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
