@@ -51,7 +51,7 @@ app.post('/upload', (req, res) => {
         }
 
         // 5. 저장이 성공하면, 클라이언트가 접근할 수 있는 이미지 URL을 응답으로 보냅니다.
-        const imageUrl = `https://771e2de6580a.ngrok-free.app `;
+        const imageUrl = `https://kiosk-server-j2ow.onrender.com/images/${filename}`;
         console.log('파일 저장 성공:', imageUrl);
         res.status(200).json({ imageUrl: imageUrl });
     });
