@@ -236,7 +236,6 @@
     transform: scale(0.95) translatey(-5%);
 }
 
-
 /* --- ThemeSelect.jsx --- */
 .theme-select-container {
     position: relative;
@@ -275,7 +274,7 @@
     filter: brightness(0.9);
 }
 
-/* --- Artworks.jsx --- */
+/* --- Artworks.jsx (목록) --- */
 .artworks-container {
     position: relative;
     z-index: 10;
@@ -347,14 +346,11 @@
 .artwork-card-overlay {
     position: absolute;
     inset: 0;
-    /* 💡 배경을 투명하게 변경하고, overflow: hidden 추가 */
     background: transparent;
     overflow: hidden;
-
     border-radius: 1.5rem;
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     transition: box-shadow 150ms;
-
     display: flex;
     flex-direction: column;
     padding: 1.25rem;
@@ -372,8 +368,6 @@
     position: relative;
     border-radius: 1.5rem;
     margin-left: 30px;
-
-    /* 💡 거대한 흰색 그림자를 이용해 '구멍'을 제외한 부분을 덮음 */
     box-shadow: 0 0 0 3000px white;
 }
 
@@ -395,11 +389,9 @@
     flex: 1 1 0%;
     display: flex;
     flex-direction: column;
-    /* 💡 텍스트 영역에도 흰색 배경을 적용 */
     background: white;
     position: relative;
     z-index: 2;
-    /* 그림자 위에 오도록 */
 }
 
 .card-info h3 {
@@ -612,96 +604,6 @@
     cursor: not-allowed;
 }
 
-/* --- ArtworkDetail.jsx --- */
-.artwork-detail-container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 2rem;
-    gap: 1.5rem;
-}
-
-.detail-image {
-    width: 100%;
-    flex-shrink: 0;
-    aspect-ratio: 1 / 1;
-    object-fit: contain;
-    border-radius: 1rem;
-}
-
-.detail-info-box {
-    flex: 1 1 0%;
-    display: flex;
-    flex-direction: column;
-}
-
-.detail-title {
-    font-size: 2.25rem;
-    font-weight: 800;
-    margin-bottom: 1rem;
-}
-
-.detail-description {
-    font-size: 1.25rem;
-    line-height: 1.6;
-    color: #333;
-    flex-grow: 1;
-}
-
-.artist-info {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
-.artist-pic {
-    width: 64px;
-    height: 64px;
-    border-radius: 9999px;
-    background-color: #eee;
-}
-
-.artist-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.artist-name {
-    font-size: 1.5rem;
-    font-weight: 700;
-}
-
-.artist-institution {
-    font-size: 1.125rem;
-    color: #555;
-}
-
-.detail-button-group {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 120px;
-    padding: 0 1rem;
-}
-
-.cancel-text {
-    font-size: 1.875rem;
-    font-weight: 700;
-    color: #555;
-}
-
-.confirm-photo-button {
-    background-color: #d94682;
-    color: white;
-    font-size: 1.875rem;
-    font-weight: 700;
-    padding: 1rem 3rem;
-    border-radius: 9999px;
-    border: none;
-    cursor: pointer;
-}
-
 /* --- PhotoInstructions.jsx --- */
 .instructions-container {
     height: 100%;
@@ -745,7 +647,7 @@
     cursor: pointer;
 }
 
-/* --- Review.jsx (디자인 수정) --- */
+/* --- Review.jsx --- */
 .review-container {
     height: 100%;
     display: flex;
@@ -810,7 +712,7 @@
     border-color: #d94682;
 }
 
-/* --- QrCode.jsx (디자인 수정) --- */
+/* --- QrCode.jsx --- */
 .qr-container {
     height: 100%;
     display: flex;
@@ -858,4 +760,526 @@
     color: white;
     border: none;
     cursor: pointer;
+}
+
+/* ===== ArtworkDetail (상세 화면) — 디자인 시안 매칭 ===== */
+
+/* 상세 화면 그리드 레이아웃: 요소들을 중앙에 모으고 세로로 꽉 쓰기 */
+.artwork-detail-container {
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    justify-items: center;
+    align-content: start;
+    row-gap: 24px;
+    padding: 2.25rem 2rem 1.25rem;
+}
+
+/* 상단 작품 이미지: 화면 기준으로 크게 */
+.detail-image {
+    width: min(72vw, 780px);
+    max-height: 48vh;
+    object-fit: contain;
+    border-radius: 16px;
+    margin: 0 auto 8px;
+    display: block;
+}
+
+/* 설명 카드: 버튼과 동일 폭으로 */
+.detail-card {
+    width: min(86vw, 900px);
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.14);
+    padding: 32px 28px 24px;
+}
+
+/* 제목/설명 크기 자동 스케일 */
+.detail-card-title {
+    text-align: center;
+    font-size: clamp(28px, 2.2vw, 40px);
+    line-height: 1.2;
+    font-weight: 800;
+    margin: 0 0 14px 0;
+}
+
+.detail-card-desc {
+    text-align: center;
+    font-size: clamp(20px, 1.6vw, 28px);
+    line-height: 1.95;
+    color: #111827;
+}
+
+.detail-card-desc p+p {
+    margin-top: 12px;
+}
+
+.detail-divider {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 18px 0 16px;
+}
+
+/* 작가 정보 */
+.artist-info-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.artist-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 9999px;
+    background: #e5e7eb;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.artist-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.artist-name-strong {
+    font-size: clamp(18px, 1.4vw, 22px);
+    font-weight: 800;
+}
+
+.artist-institution-muted {
+    font-size: clamp(15px, 1.1vw, 18px);
+    color: #6b7280;
+}
+
+/* 하단 버튼: 카드와 동일 폭, 2열 배치 */
+.detail-actions {
+    width: min(86vw, 900px);
+    margin: 6px auto 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    align-items: center;
+}
+
+/* 대형 pill 버튼 공통 */
+.btn-cancel,
+.btn-photo {
+    height: 84px;
+    padding: 0 28px;
+    border-radius: 9999px;
+    font-size: clamp(22px, 1.7vw, 28px);
+    font-weight: 900;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* 선택 취소 버튼 */
+.btn-cancel {
+    background: #fff;
+    color: #111827;
+    border: 4px solid #111827;
+}
+
+.btn-cancel:active {
+    transform: translateY(1px);
+}
+
+/* 사진찍기 버튼 */
+.btn-photo {
+    background: linear-gradient(180deg, #f472b6, #ec4899);
+    color: #fff;
+    box-shadow: 0 18px 36px rgba(236, 72, 153, 0.35);
+}
+
+.btn-photo img {
+    height: 24px;
+    width: 24px;
+    filter: brightness(0) invert(1);
+}
+
+.btn-photo:active {
+    transform: translateY(1px);
+}
+
+/* ===== ArtworkDetail — 더 크게(이미지/텍스트 대폭 확대) 덮어쓰기 ===== */
+.layout-container {
+    /* 카드/버튼/이미지/글자 크기 한 번에 조절하는 노브 */
+    --detail-max-width: 980px;
+    /* 카드/버튼 폭 ↑ */
+    --image-max-width: 860px;
+    /* 작품 이미지 최대 폭 ↑ */
+    --image-max-height: 1080px;
+    /* 작품 이미지 최대 높이 ↑ */
+    --button-height: 104px;
+    /* 버튼 높이 ↑ */
+    --title-size: 52px;
+    /* 제목 폰트 크게 ↑ */
+    --desc-size: 32px;
+    /* 본문 폰트 많이 ↑ */
+    --artist-name-size: 26px;
+    /* 작가명 폰트 ↑ */
+    --artist-inst-size: 22px;
+    /* 기관명 폰트 ↑ */
+}
+
+.layout-main .detail-image {
+    width: min(var(--image-max-width), 100%);
+    max-height: var(--image-max-height);
+    object-fit: contain;
+    border-radius: 16px;
+    margin: 4px auto 12px;
+    /* 위아래 여백 살짝만 */
+    display: block;
+}
+
+.layout-main .detail-card {
+    width: var(--detail-max-width);
+    max-width: 100%;
+    padding: 40px 34px 30px;
+    /* 패딩도 키워서 여백 균형 */
+    border-radius: 26px;
+    box-shadow: 0 28px 56px rgba(0, 0, 0, 0.16);
+}
+
+.layout-main .detail-card-title {
+    font-size: var(--title-size);
+    line-height: 1.18;
+    margin: 0 0 18px 0;
+    letter-spacing: -0.02em;
+}
+
+.layout-main .detail-card-desc {
+    font-size: var(--desc-size);
+    line-height: 2.05;
+    /* 본문 큼 → 행간 넉넉히 */
+    color: #111827;
+}
+
+.layout-main .detail-card-desc p+p {
+    margin-top: 14px;
+}
+
+.layout-main .detail-divider {
+    margin: 22px 0 18px;
+}
+
+.layout-main .artist-avatar {
+    width: 70px;
+    height: 70px;
+}
+
+.layout-main .artist-name-strong {
+    font-size: var(--artist-name-size);
+    font-weight: 800;
+}
+
+.layout-main .artist-institution-muted {
+    font-size: var(--artist-inst-size);
+    color: #6b7280;
+}
+
+/* 버튼도 더 큼직하게 */
+.layout-main .detail-actions {
+    width: var(--detail-max-width);
+    max-width: 100%;
+    gap: 24px;
+    margin: 10px auto 12px;
+}
+
+.layout-main .btn-cancel,
+.layout-main .btn-photo {
+    height: var(--button-height);
+    font-size: 32px;
+    /* 버튼 글씨 크기 ↑ */
+    padding: 0 34px;
+}
+
+.layout-main .btn-photo img {
+    width: 28px;
+    height: 28px;
+}
+
+/* ===== PhotoInstructions: 미리보기 + 오버레이 + 안내문 + 버튼 ===== */
+.instr-page {
+    min-height: calc(1920px - 150px - 180px);
+    /* 헤더/푸터 제외 */
+    display: grid;
+    grid-template-rows: auto auto;
+    justify-items: center;
+    align-content: start;
+    row-gap: 24px;
+    padding: 24px 24px 12px;
+}
+
+.instr-viewport {
+    width: min(92%, 980px);
+    aspect-ratio: 3 / 4;
+    /* 큰 세로형 프레임 */
+    position: relative;
+    border-radius: 36px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+}
+
+.instr-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* 필요하면 거울 효과:
+  transform: scaleX(-1);
+  */
+}
+
+.instr-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    /* 반투명 어둡게 */
+    pointer-events: none;
+}
+
+.instr-text {
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 88%;
+    text-align: center;
+    color: #fff;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.45);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    font-size: 56px;
+    /* 디자인 시안 수준 */
+}
+
+.instr-highlight {
+    color: #f472b6;
+}
+
+/* 버튼 행: 기존 ArtworkDetail 버튼 규격 재사용, 동일 폭으로 */
+.instr-actions {
+    width: min(92%, 980px);
+    margin: 6px auto 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+.shoot-error {
+    margin-top: 8px;
+    color: #b91c1c;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* 공통 뷰포트(미리보기/촬영) */
+.instr-page {
+    min-height: calc(1920px - 150px - 180px);
+    display: grid;
+    grid-template-rows: auto auto;
+    justify-items: center;
+    align-content: start;
+    row-gap: 24px;
+    padding: 24px 24px 12px;
+}
+
+.shoot-viewport {
+    width: min(92%, 980px);
+    aspect-ratio: 3 / 4;
+    position: relative;
+    border-radius: 36px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+}
+
+.shoot-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.shoot-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    pointer-events: none;
+}
+
+.shoot-instruction {
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 88%;
+    text-align: center;
+    color: #fff;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.45);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    font-size: 56px;
+}
+
+.shoot-highlight {
+    color: #f472b6;
+}
+
+/* 하단 버튼(두 화면 공용) */
+.shoot-actions {
+    width: min(92%, 980px);
+    margin: 6px auto 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+/* 카운트다운 오버레이 (PhotoShoot) */
+.count-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: start center;
+    padding-top: 6%;
+    color: #fff;
+    text-align: center;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.45);
+    pointer-events: none;
+}
+
+.count-number {
+    font-size: 80px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.count-text {
+    font-size: 42px;
+    font-weight: 800;
+    margin-top: 8px;
+}
+
+/* 비활성 버튼(회색) */
+.btn-disabled {
+    background: #e5e7eb !important;
+    color: #9ca3af !important;
+    border-color: #e5e7eb !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+}
+
+/* ===== 공통 미리보기/촬영 프레임 ===== */
+.instr-page {
+    min-height: calc(1920px - 150px - 180px);
+    /* 헤더/푸터 제외 */
+    display: grid;
+    grid-template-rows: auto auto;
+    justify-items: center;
+    align-content: start;
+    row-gap: 24px;
+    padding: 24px 24px 12px;
+}
+
+.shoot-viewport {
+    width: min(92%, 980px);
+    aspect-ratio: 3 / 4;
+    position: relative;
+    border-radius: 36px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+}
+
+/* 캔버스/비디오가 들어오면 꽉 채우도록 */
+.shoot-canvas,
+.shoot-video,
+.shoot-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 안내 오버레이 */
+.shoot-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    pointer-events: none;
+}
+
+.shoot-instruction {
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 88%;
+    text-align: center;
+    color: #fff;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.45);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    font-size: 56px;
+}
+
+.shoot-highlight {
+    color: #f472b6;
+}
+
+/* 버튼 바(ArtworkDetail과 같은 폭) */
+.shoot-actions {
+    width: min(92%, 980px);
+    margin: 6px auto 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+/* 상태 메시지 */
+.shoot-hint {
+    position: absolute;
+    top: 170px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #6b7280;
+    font-weight: 700;
+}
+
+.shoot-error {
+    margin-top: 8px;
+    color: #b91c1c;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* (선택) 카운트다운 오버레이가 있다면 이 스타일 재사용 가능 */
+.count-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: start center;
+    padding-top: 6%;
+    color: #fff;
+    text-align: center;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.45);
+}
+
+.count-number {
+    font-size: 80px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.count-text {
+    font-size: 42px;
+    font-weight: 800;
+    margin-top: 8px;
 }
