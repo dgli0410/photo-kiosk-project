@@ -1,0 +1,22 @@
+/* src/themes/tokens.css */
+:root {
+    /* base colors */
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --text: #111827;
+    --muted: #6b7280;
+    --accent: #d94682;
+    /* 분홍 */
+    --accent-2: #ec4899;
+
+    /* radii, scale */
+    --radius-xl: 28px;
+    --radius-2xl: 36px;
+    --scale: 1;
+    /* 폰트 스케일 배수 */
+}
+
+/* src/themes/tokens.css (추천) */
+.page-title {
+    font-weight: bold;
+}

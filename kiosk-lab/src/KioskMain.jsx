@@ -1,7 +1,11 @@
 // src/KioskMain.jsx
 import React, { useEffect, useRef, useState } from "react";
+import { useTheme } from "./ThemeProvider.jsx"; // 현재 모드 사용
 
 export default function KioskMain({ onStart }) {
+    const { mode } = useTheme();
+    const isHC = mode === "hc";
+
     const [time, setTime] = useState("");
     const [err, setErr] = useState(null);
     const vref = useRef(null);
@@ -51,10 +55,25 @@ export default function KioskMain({ onStart }) {
         return () => window.removeEventListener("resize", applyScale);
     }, []);
 
+    // 모드별 자산 경로 (고대비 전용 이미지가 없으면 기본 이미지 사용)
+    const startBtnSrc = isHC ? "/images/hc/start-btn.svg" : "/images/icon-click.png";
+    const heartsBgSrc = isHC ? "/images/hc/hearts-bg.png" : "/images/hearts-bg.png";
+    const handsFgSrc = isHC ? "/images/hc/hands-fg.png" : "/images/hands-fg.png";
+
+    // ✅ 고대비 모드에서는 메인 배경 이미지 제거
+    const mainStyle = isHC
+        ? { backgroundImage: "none" }
+        : {
+            backgroundImage: "url('/images/background-color.png')",
+            backgroundSize: "180% 180%",
+            backgroundPosition: "center 70%",
+        };
+
     return (
         <div className="kiosk-main-root">
             <div ref={wrapRef} className="layout-wrap">
                 <div className="layout-container">
+                    {/* 헤더는 모드 상관없이 동일하게 유지 */}
                     <header className="layout-header">
                         <div className="header-logo-group">
                             <img src="/images/logo-welfare.png" alt="복지관 로고" />
@@ -63,15 +82,15 @@ export default function KioskMain({ onStart }) {
                         <div className="header-time">{time}</div>
                     </header>
 
-                    <main
-                        className="kiosk-main-content"
-                        style={{
-                            backgroundImage: "url('/images/background-color.png')",
-                            backgroundSize: "180% 180%",
-                            backgroundPosition: "center 70%",
-                        }}
-                    >
-                        <img src="/images/hearts-bg.png" alt="하트 배경" className="kiosk-main-hearts-bg" />
+                    <main className="kiosk-main-content" style={mainStyle}>
+                        {/* 배경/전경 장식 이미지 (고대비 전용 자산이 없으면 기본 파일로 대체 렌더) */}
+                        <img
+                            src={heartsBgSrc}
+                            onError={(e) => (e.currentTarget.src = "/images/hearts-bg.png")}
+                            alt="하트 배경"
+                            className="kiosk-main-hearts-bg"
+                        />
+
                         <div className="kiosk-main-viewport" style={{ width: "70%", aspectRatio: "4/5" }}>
                             <div className="viewport-inner-frame">
                                 {err ? (
@@ -82,18 +101,27 @@ export default function KioskMain({ onStart }) {
                             </div>
                         </div>
 
-                        <section className="kiosk-main-text-section">
+                        <section className="kiosk-main-text-section font-cafe24">
                             <p>나눔과 소통의 미학전</p>
                             <h1>작품과 함께 사진찍기</h1>
                             <p>환영합니다!</p>
                         </section>
 
-                        <img src="/images/hands-fg.png" alt="손 모양" className="kiosk-main-hands-fg" />
+                        <img
+                            src={handsFgSrc}
+                            onError={(e) => (e.currentTarget.src = "/images/hands-fg.png")}
+                            alt="손 모양"
+                            className="kiosk-main-hands-fg"
+                        />
+
                         <button className="kiosk-main-start-btn" onClick={onStart}>
-                            <img src="/images/icon-click.png" alt="시작하기" />
+                            <img
+                                src={startBtnSrc}
+                                onError={(e) => (e.currentTarget.src = "/images/icon-click.png")}
+                                alt="시작하기"
+                            />
                         </button>
                     </main>
-
                 </div>
             </div>
         </div>

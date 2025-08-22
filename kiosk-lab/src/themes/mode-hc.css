@@ -1,0 +1,275 @@
+/* src/themes/mode-hc.css */
+.mode-hc {
+    --bg: #000000;
+    --surface: #0d0d0d;
+    --text: #ffffff;
+    --muted: #d1d5db;
+    --accent: #ffd500;
+    --accent-2: #ffea00;
+    --scale: 1.25;
+}
+
+/* ✅ 헤더는 기본 모양 유지 — 별도 오버라이드 하지 않음 */
+
+/* ✅ 메인 영역에서 배경 이미지 제거 */
+.mode-hc .layout-main {
+    background-image: none !important;
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+/* 카드/버튼/텍스트 스타일 고대비 */
+.mode-hc .detail-card,
+.mode-hc .qr-code-box,
+.mode-hc .review-image-frame {
+    background: #000;
+    border: 2px solid var(--accent);
+    box-shadow: none;
+}
+
+.mode-hc .btn-photo {
+    background: var(--accent);
+    color: #000;
+    box-shadow: none;
+}
+
+.mode-hc .btn-cancel {
+    background: transparent;
+    color: var(--accent);
+    border: 3px solid var(--accent);
+}
+
+.mode-hc .shoot-instruction {
+    font-size: calc(56px * var(--scale));
+}
+
+.mode-hc .detail-card-title {
+    font-size: calc(36px * var(--scale));
+}
+
+.mode-hc .detail-card-desc {
+    font-size: calc(24px * var(--scale));
+}
+
+.mode-hc .count-number {
+    font-size: calc(80px * var(--scale));
+}
+
+.mode-hc .qr-title {
+    font-size: calc(48px * var(--scale));
+}
+
+/* ✅ Footer 회색 배경을 별도 레이어로 처리 */
+.mode-hc .layout-footer {
+    position: relative;
+}
+
+/* 배경 전용 레이어 */
+.mode-hc .layout-footer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #393939;
+    /* 진한 회색 */
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* 실제 버튼은 항상 위에 */
+.mode-hc .layout-footer>* {
+    position: relative;
+    z-index: 1;
+}
+
+/* 아이콘 색상은 원본 유지 — filter 제거 */
+.mode-hc .layout-footer .footer-btn img {
+    filter: none !important;
+}
+
+/* ===== 고대비: Artworks 카드 (구조 그대로, 색/폰트만 변경) ===== */
+
+/* 카드 외곽은 노란 테두리 + 둥근 모서리, 배경은 '투명' */
+.mode-hc .artwork-card-overlay {
+    background: transparent !important;
+    /* ← 반드시 투명 */
+    border: 2px solid white !important;
+    /* 노란 라인 */
+    border-radius: 28px !important;
+    padding: 10px 10px 14px !important;
+    box-shadow: none !important;
+}
+
+/* '구멍' 바깥을 카드색(#1f1f1f)으로 덮어서 회색 카드처럼 보이게 */
+.mode-hc .artwork-card-overlay .card-hole {
+    position: relative;
+    width: calc(88% - 24px) !important;
+    margin: 15px auto 0 !important;
+    padding-bottom: 80% !important;
+    /* 이미지 영역 높이 (60~70%에서 조절) */
+    border-radius: 20px !important;
+
+    /* 기존: 0 0 0 3000px white  →  고대비: 회색 */
+    box-shadow: 0 0 0 3000px #1f1f1f !important;
+}
+
+/* 이미지 품질/맞춤 */
+.mode-hc .artwork-image-background img {
+    object-fit: cover !important;
+}
+
+/* 설명 영역은 카드색 위에 흰 글씨 (배경은 투명으로 두면 위 카드색이 보임) */
+.mode-hc .artwork-card-overlay .card-info {
+    background: transparent !important;
+    color: #fff !important;
+    padding: 14px 16px 16px !important;
+}
+
+.mode-hc .artwork-card-overlay .card-info h3 {
+    font-size: clamp(22px, 2.6vw, 36px) !important;
+    font-weight: 900 !important;
+    line-height: 1.2 !important;
+    margin: 2px 0 8px !important;
+    color: #fff !important;
+    white-space: normal !important;
+    /* 줄바꿈 허용 */
+}
+
+.mode-hc .artwork-card-overlay .card-info p {
+    font-size: clamp(16px, 1.8vw, 22px) !important;
+    color: #e5e7eb !important;
+    margin: 2px 0 !important;
+}
+
+.mode-hc .artwork-card-overlay .card-info .institution {
+    color: #cbd5e1 !important;
+    font-size: clamp(15px, 1.6vw, 20px) !important;
+    margin-top: 6px !important;
+}
+
+/* 뱃지 위치 보정(필요 시) */
+.mode-hc .artwork-card-overlay .card-badge {
+    position: absolute !important;
+    top: 10px !important;
+    left: 10px !important;
+    background: #111 !important;
+    color: #fff !important;
+    border-radius: 9999px !important;
+    padding: 4px 12px !important;
+    font-weight: 800 !important;
+    z-index: 2;
+}
+
+/* ===========================
+   HC 모드: 기관 선택 모달 스타일
+   (JSX 구조/클래스: .modal-backdrop .modal-panel .modal-title
+                    .modal-button-list .inst-button(.selected)
+                    .modal-footer .close-button .complete-button)
+   =========================== */
+
+/* 배경 어둡게 */
+.mode-hc .modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.78) !important;
+}
+
+/* 모달 패널: 검은 바탕 + 흰 테두리 + 둥근 모서리 */
+.mode-hc .modal-panel {
+    background: #111 !important;
+    color: #fff !important;
+    border: 2px solid #fff !important;
+    border-radius: 28px !important;
+    box-shadow: none !important;
+}
+
+/* 제목 크게, 흰색 */
+.mode-hc .modal-title {
+    color: #fff !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.02em;
+}
+
+/* 리스트: 스크롤바 최소화(선택) */
+.mode-hc .modal-button-list {
+    scrollbar-width: thin;
+}
+
+/* 버튼(기본): 회색 바탕 + 흰 테두리 + 필 형태 */
+.mode-hc .inst-button {
+    background: #2b2b2b !important;
+    /* 회색 배경 */
+    color: #fff !important;
+    border: 2px solid #fff !important;
+    /* 흰 테두리 */
+    border-radius: 9999px !important;
+    /* pill */
+    font-weight: 900 !important;
+    padding: 18px 28px !important;
+}
+
+/* Hover: 흰 → 살짝 노란 기운 */
+.mode-hc .inst-button:hover {
+    border-color: #ffd500 !important;
+}
+
+/* 선택됨: 검은 배경 + 노란 테두리 */
+.mode-hc .inst-button.selected {
+    background: #000 !important;
+    border-color: #ffd500 !important;
+    /* 노란 테두리 */
+    color: #ffd500 !important;
+    box-shadow: 0 0 0 3px rgba(255, 213, 0, 0.18) inset !important;
+    /* (선택) 강조 */
+}
+
+/* 하단 액션 버튼 영역 정렬 유지 */
+.mode-hc .modal-footer {
+    gap: 18px !important;
+}
+
+/* 닫기: 회색 바탕 + 흰 테두리 */
+.mode-hc .close-button {
+    background: #2b2b2b !important;
+    color: #fff !important;
+    border: 2px solid #fff !important;
+    border-radius: 9999px !important;
+}
+
+/* 완료: 검은 배경 + 노란 테두리 + 노란 텍스트 */
+.mode-hc .complete-button {
+    background: #000 !important;
+    color: #ffd500 !important;
+    border: 2px solid #ffd500 !important;
+    border-radius: 9999px !important;
+}
+
+/* 살짝 상호작용 */
+.mode-hc .close-button:hover {
+    filter: brightness(1.05);
+}
+
+.mode-hc .complete-button:hover {
+    box-shadow: 0 0 0 3px rgba(255, 213, 0, 0.18);
+}
+
+/* 고대비 모드 - 중앙 상단 선택된 기관 표시 */
+.mode-hc .filtered-agency-btn {
+    background: #3a3a3a;
+    /* 회색 배경 */
+    border: 2px solid #ffd500;
+    /* 노란색 테두리 */
+    color: #ffd500;
+    /* 노란색 텍스트 */
+    font-weight: 700;
+    /* 강조 */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hc .page-title {
+    color: #fff;
+}
+
+/* 고대비 모드에서만 흰색 */
+.mode-hc .page-title {
+    color: #fff !important;
+}

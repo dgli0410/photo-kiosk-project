@@ -17,7 +17,7 @@ export default function QrCode({ imageUrl, onDone }) {
     return (
         <div className="qr-container">
             <div className="qr-text-box">
-                <h2 className="qr-title">
+                <h2 className="qr-title font-cafe24">
                     핸드폰 카메라로 QR을 찍고<br />사진을 다운 받으세요!
                 </h2>
                 <p className="qr-countdown-timer">{countdown}</p>
@@ -28,8 +28,8 @@ export default function QrCode({ imageUrl, onDone }) {
                 <QRCodeSVG
                     value={imageUrl || ""}
                     size={520}                // 필요하면 420~560 사이로 조절
-                    includeMargin={false}     // ✅ 코드 주변 quiet zone 제거
-                    bgColor="transparent"     // ✅ 박스 배경색 영향 없음
+                    includeMargin={false}     // 코드 주변 quiet zone 제거
+                    bgColor="transparent"     // 박스 배경색 영향 없음
                     level="M"
                 />
             </div>
