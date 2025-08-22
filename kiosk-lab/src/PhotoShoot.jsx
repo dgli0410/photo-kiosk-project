@@ -67,7 +67,13 @@ export default function PhotoShoot({ art, onCapture, onBack }) {
             ctx.fillStyle = "#ddd";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
+        // 배경(작품)은 그대로 두고, 사람 레이어(tempCanvas)만 좌우 반전해서 얹기
+        ctx.save();
+        ctx.translate(canvas.width, 0);
+        ctx.scale(-1, 1);
         ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
+        ctx.restore();
+
     }, []);
 
     useEffect(() => {
