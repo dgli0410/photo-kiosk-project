@@ -1,6 +1,7 @@
 // src/Artworks.jsx
 import { useState } from "react";
-import InstitutionModal from './InstitutionModal';
+import { useTheme } from "./ThemeProvider.jsx"; // ✅ 모드 확인
+import InstitutionModal from "./InstitutionModal";
 
 const artworksData = [
     { id: 1, title: "<마음에 핀 꽃>", artist: "김영희", institution: "서울시립북부장애인종합복지관", imgSrc: "/images/art_example1.svg" },
@@ -11,13 +12,11 @@ const artworksData = [
     { id: 6, title: "<추가될 작품 2>", artist: "미정", institution: "노원발달장애인평생교육센터", imgSrc: null },
 ];
 
-const uniqueInstitutions = ["전체", ...new Set(artworksData.map(art => art.institution).filter(Boolean))];
+const uniqueInstitutions = ["전체", ...new Set(artworksData.map((art) => art.institution).filter(Boolean))];
 
 function ArtworkCard({ art, onSelect }) {
     return (
-        // 전체 카드를 감싸는 컨테이너
         <div className="artwork-card-container" onClick={() => onSelect(art)}>
-
             {/* 1. 배경 레이어: 작품 이미지 */}
             <div className="artwork-image-background">
                 {art.imgSrc && <img src={art.imgSrc} alt={art.title} />}
@@ -26,7 +25,6 @@ function ArtworkCard({ art, onSelect }) {
             {/* 2. 전경 레이어: 구멍 뚫린 흰색 카드 */}
             <div className="artwork-card-overlay">
                 <div className="card-hole">
-                    {/* '전시' 뱃지는 이제 여기에 위치합니다. */}
                     <span className="card-badge">전시</span>
                 </div>
                 <div className="card-info">
@@ -40,6 +38,9 @@ function ArtworkCard({ art, onSelect }) {
 }
 
 export default function Artworks({ onSelect }) {
+    const { mode } = useTheme();          // ✅ 현재 모드
+    const isHC = mode === "hc";
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activeFilter, setActiveFilter] = useState("전체");
 
@@ -48,17 +49,24 @@ export default function Artworks({ onSelect }) {
         setIsModalOpen(false);
     };
 
-    const filteredArtworks = activeFilter === "전체"
-        ? artworksData
-        : artworksData.filter(art => art.institution === activeFilter);
+    const filteredArtworks =
+        activeFilter === "전체" ? artworksData : artworksData.filter((art) => art.institution === activeFilter);
+
+    // ✅ 고대비 전용 "기관으로 찾기" 아이콘 경로
+    const findAgencySrc = isHC ? "/images/hc/find-agency-hc.svg" : "/images/find-agency.png";
 
     return (
         <div className="artworks-container">
             <div className="artworks-header">
-                <h2 className="page-title">작품을 선택해주세요</h2>
+                <h2 className="page-title font-cafe24">작품을 선택해주세요</h2>
+
                 <button onClick={() => setIsModalOpen(true)} className="find-agency-btn">
-                    {activeFilter === '전체' ? (
-                        <img src="/images/find-agency.png" alt="기관으로 찾기" />
+                    {activeFilter === "전체" ? (
+                        <img
+                            src={findAgencySrc}
+                            alt="기관으로 찾기"
+                            onError={(e) => (e.currentTarget.src = "/images/find-agency.png")} // ✅ 파일 없을 때 기본으로
+                        />
                     ) : (
                         <div className="filtered-agency-btn">
                             {/* <img src="/images/icon-search.svg" alt="검색" /> */}

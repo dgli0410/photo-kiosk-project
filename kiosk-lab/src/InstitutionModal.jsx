@@ -13,7 +13,7 @@ export default function InstitutionModal({ institutions, currentFilter, onClose,
     return (
         <div className="modal-backdrop" onClick={handleBackdropClick}>
             <div className="modal-panel">
-                <h3 className="modal-title">기관을 선택하세요</h3>
+                <h3 className="modal-title font-cafe24">기관을 선택하세요</h3>
                 <div className="modal-button-list">
                     {institutions.map(inst => {
                         const isSelected = selected === inst;
