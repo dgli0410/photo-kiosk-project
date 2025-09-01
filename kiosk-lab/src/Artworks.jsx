@@ -1,28 +1,29 @@
 // src/Artworks.jsx
 import { useState } from "react";
-import { useTheme } from "./ThemeProvider.jsx"; // ✅ 모드 확인
+import { useTheme } from "./ThemeProvider.jsx";
 import InstitutionModal from "./InstitutionModal";
+import artworksData from "./data/artworks.js";
 
-const artworksData = [
-    { id: 1, title: "<마음에 핀 꽃>", artist: "김영희", institution: "서울시립북부장애인종합복지관", imgSrc: "/images/art_example1.svg" },
-    { id: 2, title: "<햇살 머문 오후>", artist: "김영희", institution: "노원발달장애인평생교육센터", imgSrc: "/images/art-sample-2.jpg" },
-    { id: 3, title: "<꽃병>", artist: "이하나", institution: "서울시립뇌성마비복지관", imgSrc: "/images/art-sample-3.jpg" },
-    { id: 4, title: "<도시와 달>", artist: "박지민", institution: "평화종합사회복지관", imgSrc: "/images/art-sample-4.jpg" },
-    { id: 5, title: "<추가될 작품>", artist: "미정", institution: "서울시립뇌성마비복지관", imgSrc: "" },
-    { id: 6, title: "<추가될 작품 2>", artist: "미정", institution: "노원발달장애인평생교육센터", imgSrc: null },
+// ✅ “기관으로 찾기” 모달에 표시될 고정 목록 (요청한 순서 그대로)
+const INSTITUTIONS = [
+    "전체",
+    "서울장애인부모연대 노원지회",
+    "노원발달장애인평생교육센터",
+    "다운복지관",
+    "서울시립뇌성마비복지관",
+    "서울시립북부장애인종합복지관",
+    "서울시립상이군경복지관",
 ];
-
-const uniqueInstitutions = ["전체", ...new Set(artworksData.map((art) => art.institution).filter(Boolean))];
 
 function ArtworkCard({ art, onSelect }) {
     return (
         <div className="artwork-card-container" onClick={() => onSelect(art)}>
-            {/* 1. 배경 레이어: 작품 이미지 */}
+            {/* 1) 배경 레이어: 작품 이미지 */}
             <div className="artwork-image-background">
                 {art.imgSrc && <img src={art.imgSrc} alt={art.title} />}
             </div>
 
-            {/* 2. 전경 레이어: 구멍 뚫린 흰색 카드 */}
+            {/* 2) 전경 레이어: 구멍 카드 + 텍스트 */}
             <div className="artwork-card-overlay">
                 <div className="card-hole">
                     <span className="card-badge">전시</span>
@@ -38,7 +39,7 @@ function ArtworkCard({ art, onSelect }) {
 }
 
 export default function Artworks({ onSelect }) {
-    const { mode } = useTheme();          // ✅ 현재 모드
+    const { mode } = useTheme();
     const isHC = mode === "hc";
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,27 +50,29 @@ export default function Artworks({ onSelect }) {
         setIsModalOpen(false);
     };
 
+    // 외부 데이터(artworksData)로 필터 그대로 동작
     const filteredArtworks =
-        activeFilter === "전체" ? artworksData : artworksData.filter((art) => art.institution === activeFilter);
+        activeFilter === "전체"
+            ? artworksData
+            : artworksData.filter((art) => art.institution === activeFilter);
 
-    // ✅ 고대비 전용 "기관으로 찾기" 아이콘 경로
+    // 고대비 전용 "기관으로 찾기" 아이콘 경로
     const findAgencySrc = isHC ? "/images/hc/find-agency-hc.svg" : "/images/find-agency.png";
 
     return (
         <div className="artworks-container">
             <div className="artworks-header">
-                <h2 className="page-title font-cafe24">작품을 선택해주세요</h2>
+                <h2 className="page-title">작품을 선택해주세요</h2>
 
                 <button onClick={() => setIsModalOpen(true)} className="find-agency-btn">
                     {activeFilter === "전체" ? (
                         <img
                             src={findAgencySrc}
                             alt="기관으로 찾기"
-                            onError={(e) => (e.currentTarget.src = "/images/find-agency.png")} // ✅ 파일 없을 때 기본으로
+                            onError={(e) => (e.currentTarget.src = "/images/find-agency.png")}
                         />
                     ) : (
                         <div className="filtered-agency-btn">
-                            {/* <img src="/images/icon-search.svg" alt="검색" /> */}
                             <span>{activeFilter}</span>
                         </div>
                     )}
@@ -86,7 +89,7 @@ export default function Artworks({ onSelect }) {
 
             {isModalOpen && (
                 <InstitutionModal
-                    institutions={uniqueInstitutions}
+                    institutions={INSTITUTIONS}
                     currentFilter={activeFilter}
                     onClose={() => setIsModalOpen(false)}
                     onComplete={handleFilterSelect}
