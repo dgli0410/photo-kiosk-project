@@ -66,19 +66,19 @@ const nlcItems = [
         "내가 만든 독특한 개구리 캐릭터입니다. 낮과 밤의 반전되는 모습을 상상해 그림으로 표현하였습니다."),
     A(18, NLC, NLC_S, "선, 선, 선!", "lines-lines-lines-seol-jaekyung", "설재경",
         "내가 좋아하는 짧은 선 긋기 표현으로 나의 마음을 그려보았습니다."),
-    A(20, NLC, NLC_S, "나를 즐겁게 하는 것", "things-that-make-me-happy-kim-wooseok", "김우석",
+    A(19, NLC, NLC_S, "나를 즐겁게 하는 것", "things-that-make-me-happy-kim-wooseok", "김우석",
         "가장 좋아하는 게임인 '스타크래프트'의 전투 장면을 물감으로 표현하였습니다."),
-    A(21, NLC, NLC_S, "센터 오는 길", "way-to-center-kim-jooyoung", "김주영",
+    A(20, NLC, NLC_S, "센터 오는 길", "way-to-center-kim-jooyoung", "김주영",
         "소박한 일상 속 센터 오는 길 풍경에서 발견한 즐거움과 행복을 따뜻하게 담아낸 작품입니다."),
-    A(22, NLC, NLC_S, "무성", "museong-lee-muho", "이무호",
+    A(21, NLC, NLC_S, "무성", "museong-lee-muho", "이무호",
         "가족에 대한 애정을 담아 동생 '무성'이와 나의 가족을 표현한 드로잉 작품입니다."),
-    A(23, NLC, NLC_S, "번개맨", "lightning-man-lee-jimin", "이지민",
+    A(22, NLC, NLC_S, "번개맨", "lightning-man-lee-jimin", "이지민",
         "가장 좋아하는 TV 프로그램 주인공 번개맨의 12가지 역동적인 모습을 상상해 그려보았습니다."),
-    A(24, NLC, NLC_S, "자화상", "self-portrait-surak-village-artists", "수락마을 작가들",
+    A(23, NLC, NLC_S, "자화상", "self-portrait-surak-village-artists", "수락마을 작가들",
         "6명의 참여자가 자신과 소중한 사람을 떠올리며 선과 물감으로 얼굴을 표현한 그룹작품입니다."),
-    A(25, NLC, NLC_S, "맛있는 색", "delicious-colors-25p", "정인서 외 24명",
+    A(24, NLC, NLC_S, "맛있는 색", "delicious-colors-25p", "정인서 외 24명",
         "25명의 참여자가 고유한 감각과 색으로 좋아하는 맛을 표현하였습니다. 표현된 맛을 연상하며 감상할수록 즐거움이 더해지는 작품입니다."),
-    A(26, NLC, NLC_S, "스마일 컬렉션", "smile-collection-22p", "김하영 외 21명",
+    A(25, NLC, NLC_S, "스마일 컬렉션", "smile-collection-22p", "김하영 외 21명",
         "22명의 참여자가 즐거운 표정을 짓는 순간을 고유한 표현방식으로 나타내었습니다. 작품 속 스마일 거울에 자신을 비춰보며 감상하는 재미를 느낄 수 있는 작품입니다."),
 ];
 
@@ -86,30 +86,32 @@ const nlcItems = [
  * 3) 다운복지관 (down-welfare)
  * ========================================================================= */
 const DW = "다운복지관";
-const DW_S = "down-welfare";
+const DW_S = "down-welfare-center";
 
 const dwItems = [
-    A(27, DW, DW_S, "케이크와 음료수", "cake-and-drink-kim-geuna", "김근아",
+    A(26, DW, DW_S, "케이크와 음료수", "cake-and-drink-kim-geuna", "김근아",
         "제가 좋아하는 케이크랑 음료수를 그렸습니다."),
-    A(28, DW, DW_S, "호텔 로비", "hotel-lobby-kim-sungmin", "김성민",
+    A(27, DW, DW_S, "호텔 로비", "hotel-lobby-kim-sungmin", "김성민",
         "호텔 로비 풍경을 그렸습니다."),
-    A(29, DW, DW_S, "우리 가족", "my-family-kim-seungju", "김승주",
+    A(28, DW, DW_S, "우리 가족", "my-family-kim-seungju", "김승주",
         "우리 가족을 그렸습니다."),
-    A(30, DW, DW_S, "바다와 배", "sea-and-boat-nam-jaeyoung", "남재영",
+    A(29, DW, DW_S, "바다와 배", "sea-and-boat-nam-jaeyoung", "남재영",
         "바다 풍경이랑 배를 그렸습니다."),
-    A(31, DW, DW_S, "산과 풍경", "mountain-and-landscape-lee-seungmin", "이승민",
+    A(30, DW, DW_S, "산과 풍경", "mountain-and-landscape-lee-seungmin", "이승민",
         "산과 풍경을 그렸습니다."),
-    A(32, DW, DW_S, "우주선 자동차", "spaceship-car-lee-juseok", "이주석",
+    A(31, DW, DW_S, "우주선 자동차", "spaceship-car-lee-juseok", "이주석",
         "제가 좋아하는 자동차 그림을 그렸어요."),
-    A(33, DW, DW_S, "행복을 나누는 수영장", "swimming-pool-of-sharing-happiness-jeon-gyuyeon", "전규연",
+    A(32, DW, DW_S, "행복을 나누는 수영장", "swimming-pool-of-sharing-happiness-jeon-gyuyeon", "전규연",
         "수영하는 사람들이 대화하면서 분위기 좋은 모습을 그려보았습니다."),
-    A(34, DW, DW_S, "카페, 와인, 다운복지관", "cafe-wine-down-center-jeon-seoyeon", "전서연",
+    A(33, DW, DW_S, "카페, 와인, 다운복지관", "cafe-wine-down-center-jeon-seoyeon", "전서연",
         "음료수와 에스프레소, 와인, 다운복지관 마크를 그렸습니다."),
-    A(35, DW, DW_S, "나무와 집", "tree-and-house-choi-jaehoon", "최재훈",
+    A(34, DW, DW_S, "나무와 집", "tree-and-house-choi-jaehoon", "최재훈",
         "나무 사이에 있는 집을 그렸습니다."),
-    A(36, DW, DW_S, "평화의 하트 바오밥나무", "heart-baobab-tree-of-peace-lee-jongseok", "이종석",
+    A(35, DW, DW_S, "평화의 하트 바오밥나무", "heart-baobab-tree-of-peace-lee-jongseok", "이종석",
         "하트 바오밥 나무는 환경을 상징하며, 손을 맞잡은 두 사람은 협력과 사랑으로 지구를 보호하는 우리의 모습을 담고 있습니다. 파랑과 노랑은 깨끗한 빛과 물을, 하트를 물고 있는 비둘기는 사랑과 평화를 상징하며 환경을 지키는 우리의 노력으로 이룰 조화로운 미래를 나타냅니다."),
-    A(37, DW, DW_S, "8개의 시선, 하나의 풍경", "eight-views-one-landscape-lifelong-college", "평생대학 자립컨텐츠학과",
+    A(36, DW, DW_S, "8개의 시선, 하나의 풍경(작은 사이즈)", "eight-views-one-landscape-lifelong-college-small", "평생대학 자립컨텐츠학과",
+        "이 작품은 참여자들이 다운복지관의 공간을 각자의 시선으로 관찰하고, 테이프라는 독특한 재료를 이용해 재구성한 콜라주 작품입니다. 실제 복지관의 장소 사진을 바탕으로 단순화된 드로잉을 먼저 배경으로 삼고, 다양한 종류의 종이테이프를 이용해 공간의 디테일을 섬세하게 혹은 자유롭게 표현했습니다. 어떤 참여자는 실제 구조에 가까운 모습으로, 또 어떤 참여자는 창문, 문, 표지판 등의 위치나 형태를 재구성하며 자신만의 해석을 담았습니다. 단순한 공간 재현을 넘어 ‘나만의 시선’을 드러내는 작업으로 확장하였습니다. 각자의 손에서 만들어진 작은 공간들이 벽에 하나의 줄기로 연결되면서, 하나의 풍경으로 이어졌습니다.  우리의 작품은 다운복지관이라는 공동체 공간을 ‘기억’하고 ‘상상’하고 ‘재해석’한 기록이자, 함께 만든 풍경입니다."),
+    A(37, DW, DW_S, "8개의 시선, 하나의 풍경(큰 사이즈)", "eight-views-one-landscape-lifelong-college-big", "평생대학 자립컨텐츠학과",
         "이 작품은 참여자들이 다운복지관의 공간을 각자의 시선으로 관찰하고, 테이프라는 독특한 재료를 이용해 재구성한 콜라주 작품입니다. 실제 복지관의 장소 사진을 바탕으로 단순화된 드로잉을 먼저 배경으로 삼고, 다양한 종류의 종이테이프를 이용해 공간의 디테일을 섬세하게 혹은 자유롭게 표현했습니다. 어떤 참여자는 실제 구조에 가까운 모습으로, 또 어떤 참여자는 창문, 문, 표지판 등의 위치나 형태를 재구성하며 자신만의 해석을 담았습니다. 단순한 공간 재현을 넘어 ‘나만의 시선’을 드러내는 작업으로 확장하였습니다. 각자의 손에서 만들어진 작은 공간들이 벽에 하나의 줄기로 연결되면서, 하나의 풍경으로 이어졌습니다.  우리의 작품은 다운복지관이라는 공동체 공간을 ‘기억’하고 ‘상상’하고 ‘재해석’한 기록이자, 함께 만든 풍경입니다."),
 ];
 
@@ -117,7 +119,7 @@ const dwItems = [
  * 4) 서울시립뇌성마비복지관 (seoul-cp-welfare)
  * ========================================================================= */
 const CP = "서울시립뇌성마비복지관";
-const CP_S = "seoul-cp-welfare";
+const CP_S = "seoul-cp-welfare-center";
 
 const cpItems = [
     A(38, CP, CP_S, "바다 속으로", "into-the-sea-kwon-seojun", "권서준",
