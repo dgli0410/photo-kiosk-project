@@ -15,6 +15,16 @@ export default function PhotoInstructions({ art, onBack, onStart }) {
 
     const W = 1080, H = 1920;
 
+    // 🔒 화면에 표시할지 최종 필터
+    const shouldShowError = (msg) => {
+        if (!msg) return false;
+        const s = String(msg);
+        if (/AbortError/i.test(s)) return false;
+        if (/NotAllowedError/i.test(s)) return false;
+        if (/play\(\)\s*request\s*was\s*interrupted/i.test(s)) return false;
+        return true;
+    };
+
     const normalizeArtSrc = (src) => {
         if (!src) return "";
         if (/^(blob:|data:|https?:\/\/|\/)/i.test(src)) return src;
@@ -71,7 +81,7 @@ export default function PhotoInstructions({ art, onBack, onStart }) {
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
-        // 배경(작품)은 그대로 두고, 사람 레이어(tempCanvas)만 좌우 반전해서 얹기
+        // 사람 레이어만 좌우 반전
         ctx.save();
         ctx.translate(canvas.width, 0);
         ctx.scale(-1, 1);
@@ -92,8 +102,17 @@ export default function PhotoInstructions({ art, onBack, onStart }) {
                 });
                 if (!mounted) return;
                 streamRef.current = stream;
-                videoRef.current.srcObject = stream;
-                await videoRef.current.play();
+
+                const v = videoRef.current;
+                if (v) {
+                    v.srcObject = stream;
+                    // 🔇 play() 에러 무시 (UI 비표시)
+                    await v.play().catch((e) => {
+                        if (e?.name === "AbortError" || e?.name === "NotAllowedError") return;
+                        if (/play\(\)\s*request\s*was\s*interrupted/i.test(e?.message)) return;
+                        console.warn("video.play() error:", e);
+                    });
+                }
 
                 net = await bodyPix.load({
                     architecture: "MobileNetV1",
@@ -117,6 +136,14 @@ export default function PhotoInstructions({ art, onBack, onStart }) {
                 };
                 loop();
             } catch (e) {
+                // ❌ UI 노출 차단: 특정 에러는 버림
+                if (
+                    e?.name === "AbortError" ||
+                    e?.name === "NotAllowedError" ||
+                    /play\(\)\s*request\s*was\s*interrupted/i.test(e?.message)
+                ) {
+                    return;
+                }
                 console.error(e);
                 setError(e?.message || "카메라/모델 초기화 오류입니다.");
             }
@@ -158,8 +185,7 @@ export default function PhotoInstructions({ art, onBack, onStart }) {
             <video ref={videoRef} playsInline muted autoPlay style={{ display: "none" }} />
             <canvas ref={tempCanvasRef} style={{ display: "none" }} />
 
-            {!ready && !error && <div className="shoot-hint">카메라 준비 중…</div>}
-            {error && <div className="shoot-error">{error}</div>}
+            {shouldShowError(error) && <div className="shoot-error">{error}</div>}
         </div>
     );
 }

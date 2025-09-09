@@ -20,7 +20,9 @@ function ArtworkCard({ art, onSelect }) {
         <div className="artwork-card-container" onClick={() => onSelect(art)}>
             {/* 1) 배경 레이어: 작품 이미지 */}
             <div className="artwork-image-background">
-                {art.imgSrc && <img src={art.imgSrc} alt={art.title} />}
+                <div className="artwork-image-window">
+                    {art.imgSrc && <img src={art.imgSrc} alt={art.title} />}
+                </div>
             </div>
 
             {/* 2) 전경 레이어: 구멍 카드 + 텍스트 */}
