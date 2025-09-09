@@ -58,6 +58,10 @@ export default function App() {
     setMode("normal");   // 일반
     setScreen("home");   // 즉시 기본 메인(홈)으로
   };
+  const toLowMode = () => {
+    setMode("low");      // 낮은 화면
+    setScreen("home");
+  };
 
   const handleArtSelect = (art) => {
     setSelectedArt(art);
@@ -91,6 +95,7 @@ export default function App() {
             mode={mode}
             onSwitchToHC={toHighContrast}
             onSwitchToNormal={toNormalMode}
+            onSwitchToLow={toLowMode}
           >
             <ThemeSelect onSelectArt={goToArtworks} />
           </Layout>
@@ -104,6 +109,7 @@ export default function App() {
             mode={mode}
             onSwitchToHC={toHighContrast}
             onSwitchToNormal={toNormalMode}
+            onSwitchToLow={toLowMode}
           >
             <Artworks onSelect={handleArtSelect} />
           </Layout>
@@ -117,8 +123,13 @@ export default function App() {
             mode={mode}
             onSwitchToHC={toHighContrast}
             onSwitchToNormal={toNormalMode}
+            onSwitchToLow={toLowMode}
           >
-            <ArtworkDetail art={selectedArt} onConfirm={goToPhotoInstructions} />
+            <ArtworkDetail
+              art={selectedArt}
+              onConfirm={goToPhotoInstructions}
+              onCancel={() => setScreen("artworks")}
+            />
           </Layout>
         );
 
@@ -130,6 +141,7 @@ export default function App() {
             mode={mode}
             onSwitchToHC={toHighContrast}
             onSwitchToNormal={toNormalMode}
+            onSwitchToLow={toLowMode}
           >
             <PhotoInstructions art={selectedArt} onStart={goToPhotoShoot} />
           </Layout>
@@ -143,8 +155,13 @@ export default function App() {
             mode={mode}
             onSwitchToHC={toHighContrast}
             onSwitchToNormal={toNormalMode}
+            onSwitchToLow={toLowMode}
           >
-            <PhotoShoot art={selectedArt} onCapture={handlePhotoCapture} />
+            <PhotoShoot
+              art={selectedArt}
+              onCapture={handlePhotoCapture}
+              onBack={() => setScreen("artworkDetail")}
+            />
           </Layout>
         );
 
@@ -156,6 +173,7 @@ export default function App() {
             mode={mode}
             onSwitchToHC={toHighContrast}
             onSwitchToNormal={toNormalMode}
+            onSwitchToLow={toLowMode}
           >
             <Review
               capturedImage={capturedImage}
@@ -173,6 +191,7 @@ export default function App() {
             mode={mode}
             onSwitchToHC={toHighContrast}
             onSwitchToNormal={toNormalMode}
+            onSwitchToLow={toLowMode}
           >
             <QrCode imageUrl={finalImageUrl} onDone={goToHome} />
           </Layout>

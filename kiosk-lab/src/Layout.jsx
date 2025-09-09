@@ -1,6 +1,5 @@
 // src/Layout.jsx
 import { useEffect, useRef, useState } from "react";
-import { useTheme } from "./ThemeProvider.jsx"; // ✅ 모드 확인
 
 function FooterBtn({ imgSrc, alt, onClick, fallback }) {
     return (
@@ -20,12 +19,11 @@ export default function Layout({
     children,
     onHome,
     onBack,
-    // ✅ App에서 내려주는 모드 전환 콜백
     onSwitchToHC,
     onSwitchToNormal,
+    onSwitchToLow,
     mode = "normal",
 }) {
-    const { mode: ctxMode } = useTheme(); // 필요시 활용 가능 (현재는 props 우선)
     const isHC = mode === "hc";
 
     const [time, setTime] = useState("");
@@ -57,24 +55,30 @@ export default function Layout({
         return () => window.removeEventListener("resize", apply);
     }, []);
 
-    // ✅ 모드별 footer 아이콘 (HC는 SVG)
+    // mode에 따라 low 아이콘만 다르게 처리
     const icons = isHC
         ? {
-            normal: "/images/hc/normal-btn.svg", // 일반모드로 전환
-            big: "/images/hc/big-screen.svg",    // 큰글씨/고대비
-            low: "/images/hc/low-screen.svg",    // (임시) 낮은화면 – 별도 SVG 있으면 교체
+            normal: "/images/hc/normal-btn.svg",
+            big: "/images/hc/big-screen.svg",
+            low: "/images/hc/low-screen.svg",   // 고대비 모드 그대로
             home: "/images/hc/home-btn.svg",
             back: "/images/hc/back-btn.svg",
         }
-        : {
-            normal: "/images/normal-mode.png",
-            big: "/images/big-font.png",
-            low: "/images/low-screen.png",
-            home: "/images/home.png",
-            back: "/images/back.png",
-        };
-
-    // ✅ 메인 배경: 고대비는 배경 이미지 제거
+        : mode === "low"
+            ? {
+                normal: "/images/hc/normal-btn.svg",
+                big: "/images/big-font.png",
+                low: "/images/low-low-screen.svg",   // ⬅ 낮은 화면 모드일 때
+                home: "/images/home.png",
+                back: "/images/back.png",
+            }
+            : {
+                normal: "/images/normal-mode.png",
+                big: "/images/big-font.png",
+                low: "/images/normal-low-btn.svg",   // ⬅ 일반 모드일 때
+                home: "/images/home.png",
+                back: "/images/back.png",
+            };
     const mainStyle = isHC
         ? { backgroundImage: "none" }
         : { backgroundImage: "url('/images/background-color.png')" };
@@ -83,7 +87,6 @@ export default function Layout({
         <div className="layout-root">
             <div ref={wrapRef} className="layout-wrap">
                 <div className="layout-container">
-                    {/* 헤더는 항상 동일 */}
                     <header className="layout-header">
                         <div className="header-logo-group">
                             <img src="/images/logo-welfare.png" alt="복지관 로고" />
@@ -97,30 +100,24 @@ export default function Layout({
                     </main>
 
                     <nav className="layout-footer">
-                        {/* ✅ 일반모드 버튼 → App의 toNormalMode 호출 → 기본 메인으로 이동 */}
                         <FooterBtn
                             imgSrc={icons.normal}
                             alt="일반모드"
                             onClick={onSwitchToNormal}
                             fallback="/images/normal-mode.png"
                         />
-
-                        {/* ✅ 큰글씨(=고대비) 버튼 → App의 toHighContrast 호출 → 고대비 메인으로 이동 */}
                         <FooterBtn
                             imgSrc={icons.big}
                             alt="큰글씨"
                             onClick={onSwitchToHC}
                             fallback="/images/big-font.png"
                         />
-
-                        {/* 낮은화면: 필요 시 onClick 추가 */}
                         <FooterBtn
                             imgSrc={icons.low}
                             alt="낮은화면"
+                            onClick={onSwitchToLow}
                             fallback="/images/low-screen.png"
                         />
-
-                        {/* 처음으로 / 이전으로: 기존과 동일 */}
                         <FooterBtn
                             imgSrc={icons.home}
                             alt="처음으로"

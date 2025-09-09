@@ -1,0 +1,15 @@
+/* 낮은 화면 모드: 메인(홈)과 작품 설명 화면은 그대로,
+   그 외 화면만 아래로 내려서 상단 여백 확보 */
+.mode-low {
+    --low-shift: 300px;
+}
+
+.mode-low .layout-main {
+    position: relative;
+}
+
+/* ⬇️ 내릴 대상에서 .kiosk-main-content(메인) + .artwork-detail-container(작품 설명) 제외 */
+.mode-low .layout-main>*:not(.kiosk-main-content):not(.artwork-detail-container) {
+    transform: translateY(var(--low-shift));
+    transition: transform 200ms ease;
+}

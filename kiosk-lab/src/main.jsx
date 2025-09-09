@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import ThemeProvider from "./ThemeProvider.jsx";
+import "./themes/mode-low.css";
 
 //테마 CSS 추가
 import "./themes/tokens.css";

@@ -10,8 +10,10 @@ export default function ThemeProvider({ children }) {
     useEffect(() => {
         localStorage.setItem("kiosk_mode", mode);
         const root = document.documentElement;
-        root.classList.remove("mode-normal", "mode-hc");
-        root.classList.add(mode === "hc" ? "mode-hc" : "mode-normal");
+        root.classList.remove("mode-normal", "mode-hc", "mode-low");
+        root.classList.add(
+            mode === "hc" ? "mode-hc" : mode === "low" ? "mode-low" : "mode-normal"
+        );
     }, [mode]);
 
     return <ThemeCtx.Provider value={{ mode, setMode }}>{children}</ThemeCtx.Provider>;
