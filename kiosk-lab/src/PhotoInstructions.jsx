@@ -170,15 +170,18 @@ export default function PhotoInstructions({ art, onBack, onStart }) {
             <div className="shoot-viewport">
                 <canvas ref={canvasRef} className="shoot-canvas" />
                 <div className="shoot-overlay" />
-                <div className="shoot-instruction">
+                <div className="shoot-instruction font-cafe24">
                     하단의 <b className="shoot-highlight">‘촬영하기’</b> 버튼을<br />눌러서 시작해 주세요.
                 </div>
             </div>
 
             <div className="detail-actions shoot-actions">
-                <button className="btn-cancel" onClick={handleBack}>다시 선택</button>
-                <button className="btn-photo" onClick={handleStart}>
-                    촬영하기 <img src="/images/icon-camera.svg" alt="" />
+                <button className="btn-cancel font-cafe24 btn-xl" onClick={handleBack}>
+                    <span className="btn-label">다시 선택</span>
+                </button>
+                <button className="btn-photo btn-xl" onClick={handleStart}>
+                    <span className="btn-label font-cafe24 btn-xl">촬영하기</span>
+                    <img className="btn-icon" src="/images/icon-camera.svg" alt="" aria-hidden="true" />
                 </button>
             </div>
 

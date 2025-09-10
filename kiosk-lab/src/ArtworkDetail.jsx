@@ -26,11 +26,11 @@ export default function ArtworkDetail({ art, onConfirm, onCancel }) {
 
             <div className="detail-actions">
                 {/* 취소 버튼에 onCancel 연결 */}
-                <button type="button" className="btn-cancel" onClick={() => onCancel?.()}>
+                <button type="button" className="btn-cancel font-cafe24 btn-xl" onClick={() => onCancel?.()}>
                     선택 취소
                 </button>
 
-                <button type="button" className="btn-photo" onClick={() => onConfirm?.()}>
+                <button type="button" className="btn-photo font-cafe24 btn-xl" onClick={() => onConfirm?.()}>
                     촬영하기 <img src="/images/icon-camera.svg" alt="" />
                 </button>
             </div>

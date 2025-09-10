@@ -6,14 +6,13 @@ export default function Review({ capturedImage, onSave, onRetake }) {
             <div className="review-image-frame">
                 <img src={capturedImage} alt="촬영된 사진" className="review-image" />
             </div>
-            <div className="review-button-group font-cafe24">
-                <button onClick={onRetake} className="retake-button">
-                    {/* <img src="/images/icon-retry.svg" /> */}
-                    다시찍기
+            <div className="review-button-group review-actions font-cafe24">
+                <button onClick={onRetake} className="btn-cancel btn-xl">
+                    <span className="btn-label">다시찍기</span>
                 </button>
-                <button onClick={onSave} className="save-button font-cafe24">
-                    저장하기
-                    {/* <img src="/images/icon-download.svg" /> */}
+                <button onClick={onSave} className="btn-photo btn-xl">
+                    <span className="btn-label">저장하기</span>
+                    <img className="btn-icon" src="/images/icon-download.svg" alt="" aria-hidden="true" />
                 </button>
             </div>
         </div>

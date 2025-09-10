@@ -75,7 +75,7 @@ export default function Layout({
             : {
                 normal: "/images/normal-mode.png",
                 big: "/images/big-font.png",
-                low: "/images/normal-low-btn.svg",   // ⬅ 일반 모드일 때
+                low: "/images/low-screen.png",   // ⬅ 일반 모드일 때
                 home: "/images/home.png",
                 back: "/images/back.png",
             };
@@ -105,18 +105,21 @@ export default function Layout({
                             alt="일반모드"
                             onClick={onSwitchToNormal}
                             fallback="/images/normal-mode.png"
+                            active={mode==="normal"}
                         />
                         <FooterBtn
                             imgSrc={icons.big}
                             alt="큰글씨"
                             onClick={onSwitchToHC}
                             fallback="/images/big-font.png"
+                            active={mode==="hc"}
                         />
                         <FooterBtn
                             imgSrc={icons.low}
                             alt="낮은화면"
                             onClick={onSwitchToLow}
                             fallback="/images/low-screen.png"
+                            active={mode==="low"}
                         />
                         <FooterBtn
                             imgSrc={icons.home}

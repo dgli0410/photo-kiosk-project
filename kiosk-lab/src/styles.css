@@ -25,6 +25,16 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+
+    /* ArtworkDetail 화면 크기 스케일 변수(한번에 조절용) */
+    --detail-max-width: 980px;
+    --image-max-width: 860px;
+    --image-max-height: 1080px;
+    --button-height: 104px;
+    --title-size: 52px;
+    --desc-size: 32px;
+    --artist-name-size: 26px;
+    --artist-inst-size: 22px;
 }
 
 .layout-header {
@@ -67,6 +77,7 @@
     background-position: center 20%;
 }
 
+/* ===== Footer ===== */
 .layout-footer {
     height: 180px;
     background-color: transparent;
@@ -82,17 +93,36 @@
     padding: 0;
     cursor: pointer;
     transition: opacity 150ms;
+    width: 170px;
+    /* 박스 크기 통일 */
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .footer-btn:hover {
     opacity: 0.8;
 }
 
+/* 아이콘은 박스 안에서 동일 비율로 */
 .footer-btn img {
-    height: 120px;
-    width: auto;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
+/* 현재 모드 버튼만 살짝 확대 + Y축 보정(아이콘 내부 여백 차이 보정) */
+.layout-footer img[alt="일반모드"],
+.mode-hc .layout-footer img[alt="큰글씨"],
+.mode-low .layout-footer img[alt="낮은화면"],
+.layout-footer .footer-btn.is-active img {
+    transform: translateY(3px) scale(1.12);
+    /* 1.08~1.15 / 2~4px로 조절 가능 */
+    transform-origin: center;
+}
+
+/* 공통 제목 */
 .page-title {
     font-size: 3.5rem;
     /* 56px */
@@ -233,7 +263,7 @@
 }
 
 .kiosk-main-start-btn:active img {
-    transform: scale(0.95) translatey(-5%);
+    transform: scale(0.95) translateY(-5%);
 }
 
 /* --- ThemeSelect.jsx --- */
@@ -335,6 +365,8 @@
     display: grid;
     place-items: center;
     overflow: hidden;
+    pointer-events: none;
+    /* 클릭은 카드에만 */
 }
 
 .artwork-image-background img {
@@ -349,7 +381,9 @@
     background: transparent;
     overflow: hidden;
     border-radius: 1.5rem;
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    box-shadow:
+        0 10px 15px -3px rgb(0 0 0 / 0.1),
+        0 4px 6px -4px rgb(0 0 0 / 0.1);
     transition: box-shadow 150ms;
     display: flex;
     flex-direction: column;
@@ -369,6 +403,26 @@
     border-radius: 1.5rem;
     margin-left: 30px;
     box-shadow: 0 0 0 3000px white;
+}
+
+/* 이미지가 '구멍'과 동일한 영역으로 잘리도록 */
+.artwork-image-window {
+    position: absolute;
+    top: 15px;
+    left: 30px;
+    width: 85%;
+    padding-bottom: 85%;
+    /* 정사각형 */
+    border-radius: 1.5rem;
+    overflow: hidden;
+}
+
+.artwork-image-window img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .card-badge {
@@ -437,10 +491,7 @@
 /* --- InstitutionModal.jsx --- */
 .modal-backdrop {
     position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: 0;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 50;
     display: grid;
@@ -604,47 +655,306 @@
     cursor: not-allowed;
 }
 
-/* --- PhotoInstructions.jsx --- */
-.instructions-container {
+/* --- PhotoInstructions.jsx (미리보기) / PhotoShoot 공용 레이아웃 --- */
+.instr-page {
+    min-height: calc(1920px - 150px - 180px);
+    /* 헤더/푸터 제외 */
+    display: grid;
+    grid-template-rows: auto auto;
+    justify-items: center;
+    align-content: start;
+    row-gap: 24px;
+    padding: 24px 24px 12px;
+}
+
+.instr-viewport,
+.shoot-viewport {
+    width: min(92%, 980px);
+    aspect-ratio: 3 / 4;
+    position: relative;
+    border-radius: 36px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, .25);
+}
+
+.instr-video,
+.shoot-canvas {
+    width: 100%;
     height: 100%;
-    background-image: url('/images/photo-instruction-bg.png');
-    background-size: cover;
-    background-position: center;
+    object-fit: cover;
+    display: block;
+}
+
+.instr-overlay,
+.shoot-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .45);
+    pointer-events: none;
+}
+
+.instr-text,
+.shoot-instruction {
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 88%;
+    text-align: center;
+    color: #fff;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, .45);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    font-size: 56px;
+}
+
+.instr-highlight,
+.shoot-highlight {
+    color: #f472b6;
+}
+
+/* 버튼 행: ArtworkDetail 규격 재사용 */
+.instr-actions,
+.shoot-actions {
+    width: min(92%, 980px);
+    margin: 6px auto 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+/* 공용 대형 pill 버튼 확장(텍스트/아이콘 정렬) */
+.btn-xl {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    font-size: 40px;
+    line-height: 1;
+    padding: 20px 28px;
+    min-height: 84px;
+    border-radius: 60px;
+}
+
+.btn-xl .btn-icon {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 auto;
+    display: block;
+}
+
+/* 고대비에서 스케일 반영(선택) */
+.mode-hc .shoot-actions .btn-xl,
+.mode-hc .instr-actions .btn-xl,
+.mode-hc .artwork-detail-container .btn-xl,
+.mode-hc .review-actions .btn-xl {
+    font-size: calc(34px * var(--scale));
+}
+
+/* --- ArtworkDetail (상세 화면) --- */
+.artwork-detail-container {
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    justify-items: center;
+    align-content: start;
+    row-gap: 24px;
+    padding: 2.25rem 2rem 1.25rem;
+}
+
+.detail-image {
+    width: min(72vw, 780px);
+    max-height: 48vh;
+    object-fit: contain;
+    border-radius: 16px;
+    margin: 0 auto 8px;
+    display: block;
+}
+
+.detail-card {
+    width: min(86vw, 900px);
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, .14);
+    padding: 32px 28px 24px;
+}
+
+.detail-card-title {
+    text-align: center;
+    font-size: clamp(28px, 2.2vw, 40px);
+    line-height: 1.2;
+    font-weight: 800;
+    margin: 0 0 14px 0;
+}
+
+.detail-card-desc {
+    text-align: center;
+    font-size: clamp(20px, 1.6vw, 28px);
+    line-height: 1.95;
+    color: #111827;
+}
+
+.detail-card-desc p+p {
+    margin-top: 12px;
+}
+
+.detail-divider {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 18px 0 16px;
+}
+
+.artist-info-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.artist-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 9999px;
+    background: #e5e7eb;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.artist-meta {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 3rem;
 }
 
-.instructions-text-box {
-    font-size: 3rem;
+.artist-name-strong {
+    font-size: clamp(18px, 1.4vw, 22px);
     font-weight: 800;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.instructions-button-group {
-    display: flex;
-    justify-content: space-between;
+.artist-institution-muted {
+    font-size: clamp(15px, 1.1vw, 18px);
+    color: #6b7280;
+}
+
+.detail-actions {
+    width: min(86vw, 900px);
+    margin: 6px auto 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
     align-items: center;
-    height: 120px;
 }
 
-.instructions-button-group span {
-    font-size: 1.875rem;
-    font-weight: 700;
-    color: white;
-}
-
-.start-shooting-button {
-    background-color: #d94682;
-    color: white;
-    font-size: 1.875rem;
-    font-weight: 700;
-    padding: 1rem 3rem;
+.btn-cancel,
+.btn-photo {
+    height: 84px;
+    padding: 0 28px;
     border-radius: 9999px;
+    font-size: clamp(22px, 1.7vw, 28px);
+    font-weight: 900;
     border: none;
     cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .12);
+}
+
+.btn-cancel {
+    background: #fff;
+    color: #111827;
+    border: 4px solid #111827;
+}
+
+.btn-cancel:active {
+    transform: translateY(1px);
+}
+
+.btn-photo {
+    background: linear-gradient(180deg, #f472b6, #ec4899);
+    color: #fff;
+    box-shadow: 0 18px 36px rgba(236, 72, 153, .35);
+}
+
+.btn-photo img {
+    height: 24px;
+    width: 24px;
+    filter: brightness(0) invert(1);
+}
+
+.btn-photo:active {
+    transform: translateY(1px);
+}
+
+/* ArtworkDetail 덮어쓰기(변수 기반 확장) */
+.layout-main .detail-image {
+    width: min(var(--image-max-width), 100%);
+    max-height: var(--image-max-height);
+    object-fit: contain;
+    border-radius: 16px;
+    margin: 4px auto 12px;
+    display: block;
+}
+
+.layout-main .detail-card {
+    width: var(--detail-max-width);
+    max-width: 100%;
+    padding: 40px 34px 30px;
+    border-radius: 26px;
+    box-shadow: 0 28px 56px rgba(0, 0, 0, .16);
+}
+
+.layout-main .detail-card-title {
+    font-size: var(--title-size);
+    line-height: 1.18;
+    margin: 0 0 18px 0;
+    letter-spacing: -0.02em;
+}
+
+.layout-main .detail-card-desc {
+    font-size: var(--desc-size);
+    line-height: 2.05;
+    color: #111827;
+}
+
+.layout-main .detail-card-desc p+p {
+    margin-top: 14px;
+}
+
+.layout-main .detail-divider {
+    margin: 22px 0 18px;
+}
+
+.layout-main .artist-avatar {
+    width: 70px;
+    height: 70px;
+}
+
+.layout-main .artist-name-strong {
+    font-size: var(--artist-name-size);
+    font-weight: 800;
+}
+
+.layout-main .artist-institution-muted {
+    font-size: var(--artist-inst-size);
+    color: #6b7280;
+}
+
+.layout-main .detail-actions {
+    width: var(--detail-max-width);
+    max-width: 100%;
+    gap: 24px;
+    margin: 10px auto 12px;
+}
+
+.layout-main .btn-cancel,
+.layout-main .btn-photo {
+    height: var(--button-height);
+    font-size: 32px;
+    padding: 0 34px;
+}
+
+.layout-main .btn-photo img {
+    width: 28px;
+    height: 28px;
 }
 
 /* --- Review.jsx --- */
@@ -661,55 +971,56 @@
 .review-title {
     font-size: 3rem;
     font-weight: 800;
+    margin-block: 8px 6px;
 }
 
 .review-image-frame {
-    flex-grow: 1;
-    width: 100%;
+    /* 가로 600~720px 사이, 화면 폭 비율 60vw 선호 */
+    width: clamp(600px, 60vw, 720px);
+    margin: 4px auto 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .1);
     display: grid;
     place-items: center;
-    padding: 1rem;
-    background: white;
-    border-radius: 1.5rem;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
 .review-image {
-    max-width: 100%;
+    width: 100%;
+    height: auto;
     max-height: 100%;
     object-fit: contain;
 }
 
-.review-button-group {
-    display: flex;
-    gap: 1.5rem;
-    width: 100%;
+/* 촬영 화면과 동일한 버튼 룩앤필 */
+.review-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+    gap: 16px;
+    width: min(100%, 980px);
+    margin-inline: auto;
+    margin-top: 10px;
 }
 
-.retake-button,
-.save-button {
-    flex: 1;
-    padding: 1.5rem;
-    font-size: 1.875rem;
-    font-weight: 700;
-    border-radius: 1rem;
-    border: 4px solid #ccc;
-    cursor: pointer;
-    display: flex;
+.review-actions .btn-xl {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 14px;
+    font-size: 34px;
+    line-height: 1;
+    padding: 20px 28px;
+    min-height: 84px;
+    border-radius: 60px;
 }
 
-.retake-button {
-    background-color: #eee;
-    color: #333;
-}
-
-.save-button {
-    background-color: #d94682;
-    color: white;
-    border-color: #d94682;
+.review-actions .btn-xl .btn-icon {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 auto;
+    display: block;
 }
 
 /* --- QrCode.jsx --- */
@@ -762,408 +1073,6 @@
     cursor: pointer;
 }
 
-/* ===== ArtworkDetail (상세 화면) — 디자인 시안 매칭 ===== */
-
-/* 상세 화면 그리드 레이아웃: 요소들을 중앙에 모으고 세로로 꽉 쓰기 */
-.artwork-detail-container {
-    height: 100%;
-    display: grid;
-    grid-template-rows: auto auto auto;
-    justify-items: center;
-    align-content: start;
-    row-gap: 24px;
-    padding: 2.25rem 2rem 1.25rem;
-}
-
-/* 상단 작품 이미지: 화면 기준으로 크게 */
-.detail-image {
-    width: min(72vw, 780px);
-    max-height: 48vh;
-    object-fit: contain;
-    border-radius: 16px;
-    margin: 0 auto 8px;
-    display: block;
-}
-
-/* 설명 카드: 버튼과 동일 폭으로 */
-.detail-card {
-    width: min(86vw, 900px);
-    background: #fff;
-    border-radius: 24px;
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.14);
-    padding: 32px 28px 24px;
-}
-
-/* 제목/설명 크기 자동 스케일 */
-.detail-card-title {
-    text-align: center;
-    font-size: clamp(28px, 2.2vw, 40px);
-    line-height: 1.2;
-    font-weight: 800;
-    margin: 0 0 14px 0;
-}
-
-.detail-card-desc {
-    text-align: center;
-    font-size: clamp(20px, 1.6vw, 28px);
-    line-height: 1.95;
-    color: #111827;
-}
-
-.detail-card-desc p+p {
-    margin-top: 12px;
-}
-
-.detail-divider {
-    border: none;
-    border-top: 1px solid #e5e7eb;
-    margin: 18px 0 16px;
-}
-
-/* 작가 정보 */
-.artist-info-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.artist-avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 9999px;
-    background: #e5e7eb;
-    object-fit: cover;
-    flex-shrink: 0;
-}
-
-.artist-meta {
-    display: flex;
-    flex-direction: column;
-}
-
-.artist-name-strong {
-    font-size: clamp(18px, 1.4vw, 22px);
-    font-weight: 800;
-}
-
-.artist-institution-muted {
-    font-size: clamp(15px, 1.1vw, 18px);
-    color: #6b7280;
-}
-
-/* 하단 버튼: 카드와 동일 폭, 2열 배치 */
-.detail-actions {
-    width: min(86vw, 900px);
-    margin: 6px auto 8px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    align-items: center;
-}
-
-/* 대형 pill 버튼 공통 */
-.btn-cancel,
-.btn-photo {
-    height: 84px;
-    padding: 0 28px;
-    border-radius: 9999px;
-    font-size: clamp(22px, 1.7vw, 28px);
-    font-weight: 900;
-    border: none;
-    cursor: pointer;
-    white-space: nowrap;
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
-}
-
-/* 선택 취소 버튼 */
-.btn-cancel {
-    background: #fff;
-    color: #111827;
-    border: 4px solid #111827;
-}
-
-.btn-cancel:active {
-    transform: translateY(1px);
-}
-
-/* 사진찍기 버튼 */
-.btn-photo {
-    background: linear-gradient(180deg, #f472b6, #ec4899);
-    color: #fff;
-    box-shadow: 0 18px 36px rgba(236, 72, 153, 0.35);
-}
-
-.btn-photo img {
-    height: 24px;
-    width: 24px;
-    filter: brightness(0) invert(1);
-}
-
-.btn-photo:active {
-    transform: translateY(1px);
-}
-
-/* ===== ArtworkDetail — 더 크게(이미지/텍스트 대폭 확대) 덮어쓰기 ===== */
-.layout-container {
-    /* 카드/버튼/이미지/글자 크기 한 번에 조절하는 노브 */
-    --detail-max-width: 980px;
-    /* 카드/버튼 폭 ↑ */
-    --image-max-width: 860px;
-    /* 작품 이미지 최대 폭 ↑ */
-    --image-max-height: 1080px;
-    /* 작품 이미지 최대 높이 ↑ */
-    --button-height: 104px;
-    /* 버튼 높이 ↑ */
-    --title-size: 52px;
-    /* 제목 폰트 크게 ↑ */
-    --desc-size: 32px;
-    /* 본문 폰트 많이 ↑ */
-    --artist-name-size: 26px;
-    /* 작가명 폰트 ↑ */
-    --artist-inst-size: 22px;
-    /* 기관명 폰트 ↑ */
-}
-
-.layout-main .detail-image {
-    width: min(var(--image-max-width), 100%);
-    max-height: var(--image-max-height);
-    object-fit: contain;
-    border-radius: 16px;
-    margin: 4px auto 12px;
-    /* 위아래 여백 살짝만 */
-    display: block;
-}
-
-.layout-main .detail-card {
-    width: var(--detail-max-width);
-    max-width: 100%;
-    padding: 40px 34px 30px;
-    /* 패딩도 키워서 여백 균형 */
-    border-radius: 26px;
-    box-shadow: 0 28px 56px rgba(0, 0, 0, 0.16);
-}
-
-.layout-main .detail-card-title {
-    font-size: var(--title-size);
-    line-height: 1.18;
-    margin: 0 0 18px 0;
-    letter-spacing: -0.02em;
-}
-
-.layout-main .detail-card-desc {
-    font-size: var(--desc-size);
-    line-height: 2.05;
-    /* 본문 큼 → 행간 넉넉히 */
-    color: #111827;
-}
-
-.layout-main .detail-card-desc p+p {
-    margin-top: 14px;
-}
-
-.layout-main .detail-divider {
-    margin: 22px 0 18px;
-}
-
-.layout-main .artist-avatar {
-    width: 70px;
-    height: 70px;
-}
-
-.layout-main .artist-name-strong {
-    font-size: var(--artist-name-size);
-    font-weight: 800;
-}
-
-.layout-main .artist-institution-muted {
-    font-size: var(--artist-inst-size);
-    color: #6b7280;
-}
-
-/* 버튼도 더 큼직하게 */
-.layout-main .detail-actions {
-    width: var(--detail-max-width);
-    max-width: 100%;
-    gap: 24px;
-    margin: 10px auto 12px;
-}
-
-.layout-main .btn-cancel,
-.layout-main .btn-photo {
-    height: var(--button-height);
-    font-size: 32px;
-    /* 버튼 글씨 크기 ↑ */
-    padding: 0 34px;
-}
-
-.layout-main .btn-photo img {
-    width: 28px;
-    height: 28px;
-}
-
-/* ===== PhotoInstructions: 미리보기 + 오버레이 + 안내문 + 버튼 ===== */
-.instr-page {
-    min-height: calc(1920px - 150px - 180px);
-    /* 헤더/푸터 제외 */
-    display: grid;
-    grid-template-rows: auto auto;
-    justify-items: center;
-    align-content: start;
-    row-gap: 24px;
-    padding: 24px 24px 12px;
-}
-
-.instr-viewport {
-    width: min(92%, 980px);
-    aspect-ratio: 3 / 4;
-    /* 큰 세로형 프레임 */
-    position: relative;
-    border-radius: 36px;
-    overflow: hidden;
-    background: #000;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
-}
-
-.instr-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* 필요하면 거울 효과:
-  transform: scaleX(-1);
-  */
-}
-
-.instr-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-    /* 반투명 어둡게 */
-    pointer-events: none;
-}
-
-.instr-text {
-    position: absolute;
-    top: 7%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 88%;
-    text-align: center;
-    color: #fff;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.45);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    font-size: 56px;
-    /* 디자인 시안 수준 */
-}
-
-.instr-highlight {
-    color: #f472b6;
-}
-
-/* 버튼 행: 기존 ArtworkDetail 버튼 규격 재사용, 동일 폭으로 */
-.instr-actions {
-    width: min(92%, 980px);
-    margin: 6px auto 10px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 22px;
-}
-
-.shoot-error {
-    margin-top: 8px;
-    color: #b91c1c;
-    font-size: 20px;
-    font-weight: 700;
-}
-
-/* 공통 뷰포트(미리보기/촬영) */
-.instr-page {
-    min-height: calc(1920px - 150px - 180px);
-    display: grid;
-    grid-template-rows: auto auto;
-    justify-items: center;
-    align-content: start;
-    row-gap: 24px;
-    padding: 24px 24px 12px;
-}
-
-.shoot-viewport {
-    width: min(92%, 980px);
-    aspect-ratio: 3 / 4;
-    position: relative;
-    border-radius: 36px;
-    overflow: hidden;
-    background: #000;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
-}
-
-.shoot-canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-.shoot-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-    pointer-events: none;
-}
-
-.shoot-instruction {
-    position: absolute;
-    top: 7%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 88%;
-    text-align: center;
-    color: #fff;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.45);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    font-size: 56px;
-}
-
-.shoot-highlight {
-    color: #f472b6;
-}
-
-/* 하단 버튼(두 화면 공용) */
-.shoot-actions {
-    width: min(92%, 980px);
-    margin: 6px auto 10px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 22px;
-}
-
-/* 카운트다운 오버레이 (PhotoShoot) */
-.count-overlay {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: start center;
-    padding-top: 6%;
-    color: #fff;
-    text-align: center;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.45);
-    pointer-events: none;
-}
-
-.count-number {
-    font-size: 80px;
-    font-weight: 900;
-    line-height: 1;
-}
-
-.count-text {
-    font-size: 42px;
-    font-weight: 800;
-    margin-top: 8px;
-}
-
 /* 비활성 버튼(회색) */
 .btn-disabled {
     background: #e5e7eb !important;
@@ -1171,34 +1080,4 @@
     border-color: #e5e7eb !important;
     box-shadow: none !important;
     cursor: not-allowed !important;
-}
-
-/* 이미지가 '구멍'과 동일한 영역으로 잘리도록 */
-.artwork-image-background {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    /* 클릭은 카드에만 전달 */
-}
-
-/* ✅ 구멍과 동일한 치수: left=30px, top=15px, width=85%, 정사각형, 둥근 모서리 */
-.artwork-image-window {
-    position: absolute;
-    top: 15px;
-    left: 30px;
-    width: 85%;
-    padding-bottom: 85%;
-    /* 정사각형 유지 */
-    border-radius: 1.5rem;
-    overflow: hidden;
-    /* 여기서 깔끔히 잘림 */
-}
-
-/* 이미지 채우기 */
-.artwork-image-window img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 }

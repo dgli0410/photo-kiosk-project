@@ -1,15 +1,110 @@
-/* 낮은 화면 모드: 메인(홈)과 작품 설명 화면은 그대로,
-   그 외 화면만 아래로 내려서 상단 여백 확보 */
-.mode-low {
-    --low-shift: 300px;
+/* === 낮은화면 모드: 테마선택 화면 간격/크기/배치 개선 === */
+
+/* 제목과 버튼 사이 간격 축소 (낮은화면에서만) */
+.mode-low .theme-select-container .page-title {
+    margin-bottom: 0.75rem;
+    /* 기존보다 타이트 */
 }
 
-.mode-low .layout-main {
-    position: relative;
+/* 버튼 2개 가로 2열 배치 */
+.mode-low .theme-select-body.theme-select-low {
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* 2열 */
+    gap: 1.5rem 1rem;
+    /* 간격 줄여서 안 비어 보이게 */
+    align-items: center;
+    justify-items: center;
 }
 
-/* ⬇️ 내릴 대상에서 .kiosk-main-content(메인) + .artwork-detail-container(작품 설명) 제외 */
-.mode-low .layout-main>*:not(.kiosk-main-content):not(.artwork-detail-container) {
-    transform: translateY(var(--low-shift));
-    transition: transform 200ms ease;
+/* 카드 버튼 크기 키우기 (가로 2열에서 적당히 크게) */
+.mode-low .theme-select-body.theme-select-low button {
+    width: 92%;
+    /* 기존 88% → 92% */
+    max-width: 460px;
+    /* 필요시 420~480px 사이로 조절 */
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.mode-low .theme-select-body.theme-select-low button img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* (선택) 마우스 오버 시 살짝 강조 */
+.mode-low .theme-select-body.theme-select-low button:hover img {
+    filter: brightness(0.98);
+}
+
+/* ===== 낮은화면 모드 - 테마선택 화면을 '아랫쪽 정렬 + 무스크롤'로 ===== */
+
+/* 1) 테마선택 컨테이너 자체를 그리드로 만들어 '아랫쪽'에 정렬 */
+.mode-low .theme-select-container {
+    /* 헤더(150) + 푸터(180)를 뺀 실제 뷰포트 높이 */
+    min-height: calc(1920px - 150px - 180px);
+    display: grid;
+    grid-template-rows: auto auto;
+    /* [제목] [버튼 두 개] */
+    align-content: end;
+    /* ⬅️ 아래쪽으로 몰아주기 */
+    justify-items: center;
+    row-gap: 12px;
+    /* 제목↔버튼 간격 타이트 */
+    padding: 8px 24px 12px;
+    /* 하단 살짝 여유 */
+    overflow: hidden;
+    /* 내부 스크롤 제거 */
+    /* 테마선택 화면에서는 공통 하강 오프셋을 약간만 적용 */
+    --low-shift: 200px;
+    /* 기본 300px → 200px로 조정(원하면 더 줄여도 됨) */
+}
+
+/* 2) 테마선택이 표시될 때만 메인 스크롤 막기 (크롬/엣지 지원) */
+.mode-low .layout-main:has(.theme-select-container) {
+    overflow: hidden;
+}
+
+/* 3) 제목과 버튼 사이 간격 더 축소 (낮은화면 전용) */
+.mode-low .theme-select-container .page-title {
+    margin-bottom: 0.5rem;
+    /* 기존보다 더 촘촘히 */
+}
+
+/* 4) 버튼 2개를 가로 2열 + 간격/크기 살짝 확대(공간 덜 비게) */
+.mode-low .theme-select-body.theme-select-low {
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* 가로 2열 */
+    gap: 1rem 1.5rem;
+    /* 세로/가로 간격을 더 줄임 */
+    align-items: center;
+    justify-items: center;
+}
+
+.mode-low .theme-select-body.theme-select-low button {
+    width: 96%;
+    /* 92% → 96%로 확대 */
+    max-width: 520px;
+    /* 460px → 520px로 확대 */
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.mode-low .theme-select-body.theme-select-low button img {
+    width: 100%;
+    height: auto;
+    display: block;
 }

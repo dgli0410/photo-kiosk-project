@@ -273,3 +273,24 @@
 .mode-hc .page-title {
     color: #fff !important;
 }
+
+/* HC 모드: QR 박스는 흰 배경으로 (검은 QR이 선명하게) */
+.mode-hc .qr-code-box {
+    background: #fff !important;
+    border: 2px solid var(--accent);
+    border-radius: 24px;
+    padding: 16px;
+    /* 여백이 없으면 QR이 가장자리에 붙어서 가독성 저하 */
+}
+
+/* 혹시 필터/블렌드 때문에 안 보이는 경우 대비 */
+.mode-hc .qr-code-box canvas,
+.mode-hc .qr-code-box svg,
+.mode-hc .qr-code-box img {
+    filter: none !important;
+    mix-blend-mode: normal !important;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+}

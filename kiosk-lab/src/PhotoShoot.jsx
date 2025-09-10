@@ -242,11 +242,11 @@ export default function PhotoShoot({ art, onCapture, onBack }) {
                 <canvas ref={canvasRef} className="shoot-canvas" />
                 <div className="count-overlay">
                     <div className="count-number">{count}</div>
-                    <div className="count-text"> 상단의 카메라를 봐주세요!</div>
+                    <div className="count-text font-cafe24"> 상단의 카메라를 봐주세요!</div>
                 </div>
             </div>
 
-            <div className="detail-actions shoot-actions">
+            <div className="detail-actions shoot-actions font-cafe24">
                 <button type="button" className="btn-cancel" onClick={handleBackClick}>
                     다시 선택
                 </button>

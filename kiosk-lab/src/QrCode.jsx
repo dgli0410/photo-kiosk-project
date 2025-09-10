@@ -23,7 +23,7 @@ export default function QrCode({ imageUrl, onDone }) {
                 <p className="qr-countdown-timer">{countdown}</p>
             </div>
 
-            {/* ✅ 카드 여백 없이 꽉 차게 */}
+            {/* 카드 여백 없이 꽉 차게 */}
             <div className="qr-code-box">
                 <QRCodeSVG
                     value={imageUrl || ""}

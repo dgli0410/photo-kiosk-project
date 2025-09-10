@@ -64,7 +64,7 @@ export default function Artworks({ onSelect }) {
     return (
         <div className="artworks-container">
             <div className="artworks-header">
-                <h2 className="page-title">작품을 선택해주세요</h2>
+                <h2 className="page-title font-cafe24">작품을 선택해주세요</h2>
 
                 <button onClick={() => setIsModalOpen(true)} className="find-agency-btn">
                     {activeFilter === "전체" ? (
