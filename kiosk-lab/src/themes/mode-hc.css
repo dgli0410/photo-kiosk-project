@@ -273,3 +273,33 @@
 .mode-hc .page-title {
     color: #fff !important;
 }
+
+/* === HC 모드: Review의 '저장하기' 버튼 색상/테두리 오버라이드 === */
+.mode-hc .review-button-group .save-button {
+    background: #000 !important;
+    /* 채워진 색(검정) */
+    color: #fff !important;
+    /* 글자(흰색) */
+    border-color: var(--accent) !important;
+    /* 테두리 노란색(테마 변수) */
+    box-shadow: none !important;
+}
+
+/* 호버/포커스 시 노란 강조 유지 */
+.mode-hc .review-button-group .save-button:hover {
+    border-color: var(--accent-2, #ffea00) !important;
+}
+
+.mode-hc .review-button-group .save-button:focus-visible {
+    outline: 3px solid var(--accent-2, #ffea00);
+    outline-offset: 2px;
+}
+
+/* 저장 중 비활성화 상태도 동일 톤 유지(선택) */
+.mode-hc .review-button-group .save-button[disabled] {
+    background: #111 !important;
+    color: #fff !important;
+    border-color: var(--accent) !important;
+    opacity: 1 !important;
+    /* HC에서는 흐림 효과 제거 */
+}
