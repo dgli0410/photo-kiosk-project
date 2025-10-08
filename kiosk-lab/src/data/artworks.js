@@ -175,7 +175,7 @@ const snItems = [
  * 6) 서울시립상이군경복지관 (seoul-veterans-welfare)
  * ========================================================================= */
 const SV = "서울시립상이군경복지관";
-const SV_S = "seoul-veterans-welfare";
+const SV_S = "seoul-veterans-welfare-center";
 
 const svItems = [
     A(57, SV, SV_S, "지호락", "jihorak-do-jeongyoon", "도정윤",
