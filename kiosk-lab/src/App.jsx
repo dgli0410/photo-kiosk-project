@@ -82,6 +82,19 @@ export default function App() {
     setScreen("qr");
   };
 
+  // ✅ 추가: “전시 테마로 같이 찍기” → 바로 촬영 화면 진입 (배경: theme-post.png)
+  const startThemeShoot = () => {
+    setSelectedArt({
+      id: "THEME",
+      title: "전시 테마",
+      imgSrc: "/images/theme-post.png", // public/images/theme-post.png 에 파일 배치
+      description: "전시 테마 배경으로 함께 촬영합니다.",
+      institution: "테마",
+      artist: "",
+    });
+    setScreen("photo"); // 미리보기 없이 곧바로 촬영 화면
+  };
+
   const renderScreen = () => {
     switch (screen) {
       case "home":
@@ -97,7 +110,8 @@ export default function App() {
             onSwitchToNormal={toNormalMode}
             onSwitchToLow={toLowMode}
           >
-            <ThemeSelect onSelectArt={goToArtworks} />
+            {/* 전시 테마 버튼을 누르면 바로 촬영 진입 */}
+            <ThemeSelect onSelectArt={goToArtworks} onSelectTheme={startThemeShoot} />
           </Layout>
         );
 
@@ -151,17 +165,20 @@ export default function App() {
         return (
           <Layout
             onHome={goToHome}
-            onBack={goToPhotoInstructions}
+            onBack={() => setScreen(selectedArt?.id === "THEME" ? "theme" : "photoInstructions")}
             mode={mode}
             onSwitchToHC={toHighContrast}
             onSwitchToNormal={toNormalMode}
             onSwitchToLow={toLowMode}
           >
-            <PhotoShoot
-              art={selectedArt}
-              onCapture={handlePhotoCapture}
-              onBack={() => setScreen("artworkDetail")}
-            />
+            {/* 낮은화면 모드 예외: 촬영부터 여백 제거 */}
+            <div className="no-low-shift">
+              <PhotoShoot
+                art={selectedArt}
+                onCapture={handlePhotoCapture}
+                onBack={() => setScreen(selectedArt?.id === "THEME" ? "theme" : "artworkDetail")}
+              />
+            </div>
           </Layout>
         );
 
@@ -175,11 +192,14 @@ export default function App() {
             onSwitchToNormal={toNormalMode}
             onSwitchToLow={toLowMode}
           >
-            <Review
-              capturedImage={capturedImage}
-              onSave={handlePhotoConfirm}
-              onRetake={goToPhotoShoot}
-            />
+            {/* 낮은화면 모드 예외: 리뷰 화면도 여백 제거 */}
+            <div className="no-low-shift">
+              <Review
+                capturedImage={capturedImage}
+                onSave={handlePhotoConfirm}
+                onRetake={goToPhotoShoot}
+              />
+            </div>
           </Layout>
         );
 
@@ -193,7 +213,10 @@ export default function App() {
             onSwitchToNormal={toNormalMode}
             onSwitchToLow={toLowMode}
           >
-            <QrCode imageUrl={finalImageUrl} onDone={goToHome} />
+            {/* 낮은화면 모드 예외: QR 화면도 여백 제거 */}
+            <div className="no-low-shift">
+              <QrCode imageUrl={finalImageUrl} onDone={goToHome} />
+            </div>
           </Layout>
         );
 

@@ -1417,3 +1417,32 @@
     [class*="-button"]) {
     font-family: var(--btn-font) !important;
 }
+
+/* 하트가 검은 바닥 위에 보이도록 */
+.kiosk-main-hearts-bg {
+    z-index: 2;
+}
+
+/* (참고) 이미 프로젝트에 대략 이렇게 되어 있을 거예요 */
+.kiosk-main-viewport {
+    position: relative;
+    z-index: 10;
+}
+
+.kiosk-main-hands-fg {
+    z-index: 20;
+}
+
+.kiosk-main-text-section {
+    z-index: 25;
+}
+
+.kiosk-main-start-btn {
+    z-index: 30;
+}
+
+/* 메인 문구 좌우 위치 미세 조정 */
+.kiosk-main-text-section {
+    transform: translateX(-40px);
+    /* -값일수록 왼쪽으로 */
+}

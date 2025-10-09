@@ -1,15 +1,17 @@
 // src/ThemeSelect.jsx
 import { useTheme } from "./ThemeProvider.jsx"; // ✅ 현재 모드 사용
 
-export default function ThemeSelect({ onSelectArt }) {
+export default function ThemeSelect({ onSelectArt, onSelectTheme }) {
     const { mode } = useTheme();
     const isHC = mode === "hc";
 
     const pick = (kind) => {
         if (kind === "작품과 같이 찍기") {
             onSelectArt();
+        } else if (kind === "전시 테마로 같이 찍기") {
+            onSelectTheme?.();
         } else {
-            alert(`${kind} 선택! (여기서 다음 단계로 이동 처리)`);
+            // 기타 케이스 필요 시
         }
     };
 
