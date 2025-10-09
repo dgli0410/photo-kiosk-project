@@ -9,7 +9,7 @@
 }
 
 /* ⬇️ 내릴 대상에서 .kiosk-main-content(메인) + .artwork-detail-container(작품 설명) 제외 */
-.mode-low .layout-main>*:not(.kiosk-main-content):not(.artwork-detail-container) {
+.mode-low .layout-main>*:not(.kiosk-main-content):not(.artwork-detail-container):not(.no-low-shift) {
     transform: translateY(var(--low-shift));
     transition: transform 200ms ease;
 }

@@ -303,3 +303,40 @@
     opacity: 1 !important;
     /* HC에서는 흐림 효과 제거 */
 }
+
+/* === Kiosk 메인(HC) 전용 오버레이 === */
+/* 손 아랫부분을 검은 배경으로 만들 높이(손 이미지 위치에 맞춰 조절) */
+.mode-hc {
+    --hc-floor: 560px;
+}
+
+/* 필요하면 520~620px 사이로 미세조정 */
+
+.mode-hc .kiosk-main-viewport {
+    /* 손 윗쪽(상단)은 흰색 유지 */
+    background-color: #fff;
+    position: relative;
+    /* ::after 기준점 */
+}
+
+/* 손 아랫쪽만 검은 배경으로 깔기 */
+.mode-hc .kiosk-main-viewport::after {
+    content: "";
+    position: absolute;
+    top: 1050px;
+    left: -200px;
+    right: -200px;
+    bottom: 0;
+    height: var(--hc-floor);
+    background: #000;
+    border-bottom-left-radius: 28px;
+    border-bottom-right-radius: 28px;
+    z-index: -1;
+    /* 하트/손/문구/버튼보다 낮게 */
+}
+
+/* 메인 문구(제목/부제/설명) 흰색 */
+.mode-hc .kiosk-main-text-section,
+.mode-hc .kiosk-main-text-section * {
+    color: #fff !important;
+}
