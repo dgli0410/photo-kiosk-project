@@ -166,8 +166,8 @@ export default function PhotoInstructions({ art, onBack, onStart }) {
     };
 
     return (
-        <div className="instr-page">
-            <div className="shoot-viewport">
+        <div className="instr-page with-actionbar">
+            <div className="shoot-viewport no-low-shift">
                 <canvas ref={canvasRef} className="shoot-canvas" />
                 <div className="shoot-overlay" />
                 <div className="shoot-instruction">
@@ -175,7 +175,7 @@ export default function PhotoInstructions({ art, onBack, onStart }) {
                 </div>
             </div>
 
-            <div className="detail-actions shoot-actions">
+            <div className="detail-actions shoot-actions fixed-action-bar">
                 <button className="btn-cancel" onClick={handleBack}>다시 선택</button>
                 <button className="btn-photo" onClick={handleStart}>
                     촬영하기 <img src="/images/icon-camera.svg" alt="" />

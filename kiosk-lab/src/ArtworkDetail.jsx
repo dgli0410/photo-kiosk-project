@@ -3,7 +3,7 @@ export default function ArtworkDetail({ art, onConfirm, onCancel }) {
     if (!art) return null;
 
     return (
-        <div className="artwork-detail-container">
+        <div className="artwork-detail-containe with-actionbar">
             <img className="detail-image" src={art.imgSrc} alt={art.title} />
 
             <div className="detail-card">
@@ -24,7 +24,7 @@ export default function ArtworkDetail({ art, onConfirm, onCancel }) {
                 </div>
             </div>
 
-            <div className="detail-actions">
+            <div className="detail-actions fixed-action-bar">
                 {/* 취소 버튼에 onCancel 연결 */}
                 <button type="button" className="btn-cancel" onClick={() => onCancel?.()}>
                     선택 취소

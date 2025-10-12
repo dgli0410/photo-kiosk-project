@@ -26,14 +26,14 @@ export default function Review({ capturedImage, onSave, onRetake }) {
     };
 
     return (
-        <div className="review-container" aria-busy={saving}>
+        <div className="review-container with-actionbar" aria-busy={saving}>
             <h2 className="review-title font-cafe24">사진이 나왔습니다!</h2>
 
             <div className="review-image-frame">
                 <img src={capturedImage} alt="촬영된 사진" className="review-image" />
             </div>
 
-            <div className="review-button-group font-cafe24">
+            <div className="review-button-group font-cafe24 fixed-action-bar">
                 <button
                     onClick={onRetake}
                     className="retake-button"

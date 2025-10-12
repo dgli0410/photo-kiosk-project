@@ -20,7 +20,7 @@ export default function ThemeSelect({ onSelectArt, onSelectTheme }) {
     const btnWithTheme = isHC ? "/images/hc/with-theme.png" : "/images/with-theme.png";
 
     return (
-        <div className="theme-select-container">
+        <div className="theme-select-container no-low-shift">
             <h2 className="page-title font-cafe24">원하는 테마를 선택해주세요!</h2>
 
             <div className="theme-select-body">

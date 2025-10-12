@@ -340,3 +340,31 @@
 .mode-hc .kiosk-main-text-section * {
     color: #fff !important;
 }
+
+/* src/themes/mode-hc.css */
+.mode-hc .qr-code-box {
+    background: #fff !important;
+    /* 검정 → 흰색 */
+}
+
+/* --- QR 화면(HC 전용) --- */
+.mode-hc .qr-countdown-timer {
+    /* 카운트다운 숫자 색을 고대비 포인트 컬러로 */
+    color: var(--accent) !important;
+    /* --accent = #ffd500 */
+}
+
+.mode-hc .qr-done-button {
+    /* '완료' 버튼 배경은 노란색, 폰트는 검정 */
+    background: var(--accent) !important;
+    color: #000 !important;
+    border: 2px solid var(--accent) !important;
+    /* 테두리도 통일 (선택) */
+}
+
+/* HC 모드에서도 작품 설명 화면의 '선택 취소'는 검정 배경 */
+.mode-hc .artwork-detail-container .btn-cancel {
+    background: #000 !important;
+    color: #fff !important;
+    border-color: #000 !important;
+}

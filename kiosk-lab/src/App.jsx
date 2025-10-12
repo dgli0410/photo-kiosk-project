@@ -147,19 +147,24 @@ export default function App() {
           </Layout>
         );
 
+      // App.jsx (발췌)
       case "photoInstructions":
         return (
           <Layout
             onHome={goToHome}
-            onBack={() => setScreen("artworkDetail")}
+            onBack={() => setScreen("artworkDetail")} // ← 푸터의 '이전'은 여전히 상세로
             mode={mode}
             onSwitchToHC={toHighContrast}
             onSwitchToNormal={toNormalMode}
-            onSwitchToLow={toLowMode}
           >
-            <PhotoInstructions art={selectedArt} onStart={goToPhotoShoot} />
+            <PhotoInstructions
+              art={selectedArt}
+              onBack={() => setScreen("artworks")}     // ★ '다시 선택'은 작품 목록으로
+              onStart={goToPhotoShoot}  // 촬영 시작은 촬영 화면으로
+            />
           </Layout>
         );
+
 
       case "photo":
         return (

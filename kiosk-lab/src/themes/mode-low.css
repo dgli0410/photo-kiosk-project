@@ -13,3 +13,8 @@
     transform: translateY(var(--low-shift));
     transition: transform 200ms ease;
 }
+
+/* 낮은화면 모드라 하더라도, 액션바가 있는 화면은 내리지 않음 */
+.mode-low .layout-main > .with-actionbar {
+  transform: none !important;
+}

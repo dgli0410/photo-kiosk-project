@@ -238,7 +238,7 @@ export default function PhotoShoot({ art, onCapture, onBack }) {
 
     return (
         <div className="instr-page">
-            <div className="shoot-viewport">
+            <div className="shoot-viewport with-actionbar">
                 <canvas ref={canvasRef} className="shoot-canvas" />
                 <div className="count-overlay">
                     <div className="count-number">{count}</div>
@@ -246,7 +246,7 @@ export default function PhotoShoot({ art, onCapture, onBack }) {
                 </div>
             </div>
 
-            <div className="detail-actions shoot-actions">
+            <div className="detail-actions shoot-action fixed-action-bar">
                 <button type="button" className="btn-cancel" onClick={handleBackClick}>
                     다시 선택
                 </button>
