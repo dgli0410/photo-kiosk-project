@@ -1446,3 +1446,65 @@
     transform: translateX(-40px);
     /* -값일수록 왼쪽으로 */
 }
+
+/* ===== 고정 액션바 세팅 (필요한 화면에만 켜기) ===== */
+:root {
+    --footer-height: 180px;
+    /* .layout-footer 높이와 동일 */
+    --action-gap: 24px;
+    /* 네비 위 여백 */
+    --actionbar-height: 120px;
+    /* 버튼 영역 대략 높이(84px + 여백 감안) */
+}
+
+/* 액션바가 있는 화면만 하단 패딩 추가해서 콘텐츠가 가려지지 않게 함 */
+.with-actionbar {
+    padding-bottom: calc(var(--actionbar-height) + var(--action-gap));
+}
+
+/* 버튼을 화면 공통 위치(footer 위)로 고정 */
+.fixed-action-bar {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(var(--footer-height) + var(--action-gap));
+    width: min(86vw, 900px) !important;
+    margin: 0 !important;
+    z-index: 50;
+    /* footer보다 위 */
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    /* 기본: 2개 버튼 */
+    gap: 18px;
+}
+
+/* 버튼이 1개뿐인 화면(QR 완료 등) */
+.fixed-action-bar.single {
+    grid-template-columns: 1fr;
+    width: min(86vw, 560px) !important;
+}
+
+/* 액션바가 있는 화면에서 미리보기(3:4) 영역을 액션바 위로 살짝 올려 겹침 방지 */
+.with-actionbar .shoot-viewport,
+.with-actionbar .photoshoot-viewport {
+    /* 두 컴포넌트 모두 커버 */
+    margin-bottom: calc(var(--actionbar-height, 120px) + var(--action-gap, 24px));
+}
+
+/* 낮은화면 모드에서는 내린 만큼 추가 확보 */
+.mode-low .with-actionbar .shoot-viewport,
+.mode-low .with-actionbar .photoshoot-viewport {
+    margin-bottom: calc(var(--actionbar-height, 120px) + var(--action-gap, 24px) + var(--low-shift, 300px));
+}
+
+/* 작품 설명 화면: '선택 취소' 버튼을 검정 배경으로 */
+.artwork-detail-container .btn-cancel {
+    background: #000;
+    color: #fff;
+    border: 2px solid #000;
+    /* 윤곽선까지 통일 */
+}
+
+.artwork-detail-container .btn-cancel:hover {
+    filter: brightness(1.15);
+}

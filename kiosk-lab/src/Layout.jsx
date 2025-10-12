@@ -75,7 +75,7 @@ export default function Layout({
             : {
                 normal: "/images/normal-mode.png",
                 big: "/images/big-font.png",
-                low: "/images/normal-low-btn.svg",   // ⬅ 일반 모드일 때
+                low: "/images/low-screen.png",   // ⬅ 일반 모드일 때
                 home: "/images/home.png",
                 back: "/images/back.png",
             };

@@ -15,7 +15,7 @@ export default function QrCode({ imageUrl, onDone }) {
     }, [countdown, onDone]);
 
     return (
-        <div className="qr-container">
+        <div className="qr-container with-actionbar">
             <div className="qr-text-box">
                 <h2 className="qr-title font-cafe24">
                     핸드폰 카메라로 QR을 찍고<br />사진을 다운 받으세요!
@@ -34,7 +34,9 @@ export default function QrCode({ imageUrl, onDone }) {
                 />
             </div>
 
-            <button onClick={onDone} className="qr-done-button">완료</button>
+            <div className="fixed-action-bar single">
+                <button onClick={onDone} className="qr-done-button">완료</button>
+            </div>
         </div>
     );
 }
